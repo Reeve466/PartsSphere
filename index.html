@@ -899,4 +899,563 @@ const PARTS = [
   // Brakes
   {id:7, name:"Brake Pads (Front, set)", brand:"Jurid", price:58, icon:"🛞", category:"Brakes", verified:false, certs:["CE Certified","TÜV Inspected"], sku:"JU-BP-F55", lead:"2-3 days", stock:"34 units", fitsMakes:["BMW","Mercedes-Benz"]},
   {id:8, name:"Brake Pads (Rear, set)", brand:"Textar", price:52, icon:"🛞", category:"Brakes", verified:false, certs:["CE Certified"], sku:"TX-BP-R44", lead:"2-3 days", stock:"28 units", fitsMakes:["BMW"]},
-  {id:9, name:"Brake Discs (pair)", brand:"Brembo", price:149, icon:"⭕", category
+  {id:9, name:"Brake Discs (pair)", brand:"Brembo", price:149, icon:"⭕", category:"Brakes", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"BR-BD-F22", lead:"3-4 days", stock:"12 units", fitsMakes:["BMW","Audi","Mercedes-Benz"]},
+  {id:10, name:"Brake Caliper", brand:"ATE", price:168, icon:"🔩", category:"Brakes", verified:false, certs:["CE Certified"], sku:"ATE-BC-011", lead:"4-5 days", stock:"8 units", fitsMakes:["BMW","Volkswagen"]},
+  // Suspension
+  {id:11, name:"Shock Absorber", brand:"Sachs", price:122, icon:"🛠️", category:"Suspension", verified:true, certs:["OEM Verified"], sku:"SC-SA-224", lead:"3 days", stock:"22 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:12, name:"Coil Spring", brand:"Eibach", price:80, icon:"🌀", category:"Suspension", verified:false, certs:["CE Certified"], sku:"EI-CS-440", lead:"3-4 days", stock:"16 units", fitsMakes:["BMW"]},
+  {id:13, name:"Lower Control Arm", brand:"Lemförder", price:98, icon:"🔧", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-CA-556", lead:"3-4 days", stock:"15 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:14, name:"Ball Joint", brand:"Lemförder", price:44, icon:"🔵", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-BJ-221", lead:"2 days", stock:"30 units", fitsMakes:["BMW","Audi"]},
+  {id:15, name:"Tie Rod End", brand:"TRW", price:40, icon:"🔗", category:"Steering", verified:true, certs:["OEM Verified"], sku:"TRW-TR-009", lead:"2 days", stock:"In stock (44)", fitsMakes:["BMW","Volkswagen"]},
+  // Steering
+  {id:16, name:"Steering Rack", brand:"ZF", price:625, icon:"🎯", category:"Steering", verified:true, certs:["OEM Verified","IATF 16949"], sku:"ZF-SR-033", lead:"7 days", stock:"2 units (BTO)", fitsMakes:["BMW"]},
+  {id:17, name:"Power Steering Pump", brand:"ZF", price:315, icon:"💧", category:"Steering", verified:true, certs:["OEM Verified"], sku:"ZF-PSP-07", lead:"5-7 days", stock:"5 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Drivetrain
+  {id:18, name:"Clutch Kit", brand:"LuK", price:285, icon:"⚙️", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001","TÜV Inspected"], sku:"LUK-CK-778", lead:"5-6 days", stock:"8 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:19, name:"Dual Mass Flywheel", brand:"LuK", price:415, icon:"🌐", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"LUK-DM-201", lead:"6 days", stock:"4 units", fitsMakes:["BMW"]},
+  {id:20, name:"Automatic Transmission (reman.)", brand:"ZF Friedrichshafen", price:3200, icon:"⚡", category:"Drivetrain", verified:true, certs:["OEM Verified","IATF 16949","TÜV Inspected"], sku:"ZF-AT-8HP", lead:"10 days (BTO)", stock:"1 unit (BTO)", fitsMakes:["BMW","Audi"]},
+  {id:21, name:"Driveshaft", brand:"GKN", price:345, icon:"🔄", category:"Drivetrain", verified:true, certs:["OEM Verified"], sku:"GKN-DS-114", lead:"5 days", stock:"6 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:22, name:"CV Joint", brand:"GKN", price:88, icon:"🔩", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"GKN-CV-330", lead:"2-3 days", stock:"19 units", fitsMakes:["BMW","Toyota","Honda"]},
+  {id:23, name:"Wheel Bearing", brand:"SKF", price:74, icon:"⭕", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"SKF-WB-207", lead:"1-2 days", stock:"In stock (38)", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Cooling
+  {id:24, name:"Water Pump", brand:"Saleri", price:70, icon:"💧", category:"Cooling", verified:false, certs:["CE Certified"], sku:"SL-WP-119", lead:"2 days", stock:"27 units", fitsMakes:["BMW","Toyota","Mazda"]},
+  {id:25, name:"Thermostat", brand:"Wahler", price:28, icon:"🌡️", category:"Cooling", verified:false, certs:["CE Certified"], sku:"WH-TH-063", lead:"1-2 days", stock:"41 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:26, name:"Radiator", brand:"Behr", price:188, icon:"🧊", category:"Cooling", verified:false, certs:["CE Certified"], sku:"BH-RD-556", lead:"4-5 days", stock:"9 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:27, name:"Cooling Fan", brand:"Valeo", price:148, icon:"🌬️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-CF-887", lead:"3-4 days", stock:"11 units", fitsMakes:["BMW","Renault","Peugeot"]},
+  // Electrical
+  {id:28, name:"Alternator", brand:"Bosch", price:265, icon:"🔌", category:"Electrical", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"BS-AL-880", lead:"5 days", stock:"4 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:29, name:"Starter Motor", brand:"Bosch", price:225, icon:"🔑", category:"Electrical", verified:true, certs:["OEM Verified"], sku:"BS-SM-341", lead:"4 days", stock:"7 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:30, name:"Battery (AGM)", brand:"Varta", price:198, icon:"🔋", category:"Electrical", verified:false, certs:["CE Certified"], sku:"VA-BT-H8", lead:"1-2 days", stock:"In stock (25)", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  {id:31, name:"Oxygen Sensor", brand:"Bosch", price:90, icon:"🔬", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-O2-551", lead:"2 days", stock:"18 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:32, name:"Mass Air Flow Sensor", brand:"Bosch", price:78, icon:"💨", category:"Sensors", verified:true, certs:["OEM Verified","CE Certified"], sku:"BS-MAF-77", lead:"2 days", stock:"14 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  // Fuel
+  {id:33, name:"Fuel Injector", brand:"Bosch", price:118, icon:"⛽", category:"Engine", verified:true, certs:["OEM Verified","IATF 16949"], sku:"BS-FI-202", lead:"3 days", stock:"22 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:34, name:"Fuel Pump", brand:"VDO (Continental)", price:168, icon:"⛽", category:"Engine", verified:true, certs:["OEM Verified","ISO 9001"], sku:"VDO-FP-207", lead:"4 days", stock:"9 units", fitsMakes:["BMW","Audi","Volkswagen"]},
+  // Engine Timing
+  {id:35, name:"Timing Chain Tensioner", brand:"INA", price:50, icon:"⛓️", category:"Engine", verified:true, certs:["OEM Verified"], sku:"INA-TT-88", lead:"2-3 days", stock:"17 units", fitsMakes:["BMW","Audi"]},
+  {id:36, name:"Belt Tensioner", brand:"INA", price:36, icon:"⚙️", category:"Engine", verified:true, certs:["OEM Verified"], sku:"INA-BT-33", lead:"2 days", stock:"In stock (32)", fitsMakes:["BMW","Volkswagen"]},
+  {id:37, name:"Serpentine Belt", brand:"Continental", price:22, icon:"🔄", category:"Engine", verified:true, certs:["OEM Verified"], sku:"CN-SB-011", lead:"1 day", stock:"In stock (55)", fitsMakes:["BMW","Audi","Mercedes-Benz"]},
+  {id:38, name:"Timing Chain", brand:"IWIS", price:98, icon:"⛓️", category:"Engine", verified:false, certs:["CE Certified","ISO 9001"], sku:"IW-TC-902", lead:"5 days", stock:"5 units", fitsMakes:["BMW","Audi","Skoda"]},
+  {id:39, name:"Turbocharger", brand:"Garrett", price:955, icon:"🌀", category:"Engine", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"GR-TB-111", lead:"7 days", stock:"2 units (BTO)", fitsMakes:["BMW","Audi"]},
+  {id:40, name:"Oil Pump", brand:"Febi", price:132, icon:"🛢️", category:"Engine", verified:false, certs:["ISO 9001"], sku:"FB-OP-654", lead:"3 days", stock:"11 units", fitsMakes:["BMW","Volkswagen","Skoda"]},
+  // Mounts
+  {id:41, name:"Engine Mount", brand:"Corteco", price:64, icon:"🔩", category:"Engine", verified:false, certs:["CE Certified"], sku:"CO-EM-77", lead:"2-3 days", stock:"20 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:42, name:"Transmission Mount", brand:"Corteco", price:60, icon:"🔩", category:"Drivetrain", verified:false, certs:["CE Certified"], sku:"CO-TM-44", lead:"2-3 days", stock:"16 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Exterior / Lighting
+  {id:43, name:"Wiper Blades (pair)", brand:"Bosch", price:28, icon:"🌧️", category:"Exterior", verified:true, certs:["OEM Verified"], sku:"BS-WB-22", lead:"1 day", stock:"In stock (80+)", fitsMakes:["BMW","Volkswagen","Audi","Mercedes-Benz"]},
+  {id:44, name:"Headlamp Assembly (LED)", brand:"Hella", price:485, icon:"💡", category:"Lighting", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"HL-HLA-44", lead:"7 days (BTO)", stock:"BTO order", fitsMakes:["BMW"]},
+  {id:45, name:"Tail Lamp Assembly", brand:"Hella", price:215, icon:"🔴", category:"Lighting", verified:true, certs:["OEM Verified"], sku:"HL-TLA-88", lead:"5 days", stock:"6 units", fitsMakes:["BMW"]},
+  // Body Electronics
+  {id:46, name:"Window Regulator", brand:"Brose", price:118, icon:"🪟", category:"Body Electronics", verified:true, certs:["OEM Verified"], sku:"BR-WR-012", lead:"3-4 days", stock:"10 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:47, name:"Door Lock Actuator", brand:"Brose", price:70, icon:"🔒", category:"Body Electronics", verified:true, certs:["OEM Verified","CE Certified"], sku:"BR-DL-089", lead:"2-3 days", stock:"18 units", fitsMakes:["BMW","Audi"]},
+  // Safety
+  {id:48, name:"Airbag Module", brand:"Autoliv", price:355, icon:"🛡️", category:"Safety", verified:true, certs:["OEM Verified","TÜV Inspected","IATF 16949"], sku:"AU-AB-001", lead:"7 days (BTO)", stock:"BTO order", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:49, name:"Seat Belt Assembly", brand:"Autoliv", price:148, icon:"🎽", category:"Safety", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"AU-SB-22", lead:"5 days", stock:"8 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Climate
+  {id:50, name:"HVAC Blower Motor", brand:"Valeo", price:95, icon:"❄️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-BM-334", lead:"3 days", stock:"13 units", fitsMakes:["BMW","Renault"]},
+  {id:51, name:"Climate Control Unit", brand:"Valeo", price:268, icon:"🌡️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-CC-987", lead:"5-6 days", stock:"5 units", fitsMakes:["BMW"]},
+  {id:52, name:"ABS Control Module", brand:"Bosch", price:425, icon:"⚙️", category:"Sensors", verified:true, certs:["OEM Verified","TÜV Inspected","IATF 16949"], sku:"BS-ABS-9", lead:"6-7 days", stock:"3 units", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  // Extra Euro parts
+  {id:53, name:"Clutch Master Cylinder", brand:"LuK", price:85, icon:"⚙️", category:"Drivetrain", verified:true, certs:["OEM Verified"], sku:"LUK-CM-55", lead:"3 days", stock:"14 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:54, name:"EGR Valve", brand:"Bosch", price:142, icon:"🔄", category:"Engine", verified:true, certs:["OEM Verified","CE Certified"], sku:"BS-EGR-3", lead:"4 days", stock:"9 units", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  {id:55, name:"Anti-Roll Bar Link", brand:"Lemförder", price:32, icon:"🔗", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-AR-88", lead:"2 days", stock:"28 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:56, name:"Throttle Body", brand:"Continental", price:195, icon:"🌀", category:"Engine", verified:true, certs:["OEM Verified","CE Certified"], sku:"CN-TB-44", lead:"4-5 days", stock:"7 units", fitsMakes:["BMW","Audi"]},
+  {id:57, name:"Crankshaft Position Sensor", brand:"Bosch", price:55, icon:"📡", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-CP-11", lead:"2 days", stock:"21 units", fitsMakes:["BMW","Volkswagen","Mercedes-Benz"]},
+  {id:58, name:"Camshaft Sensor", brand:"Bosch", price:48, icon:"📡", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-CS-22", lead:"2 days", stock:"19 units", fitsMakes:["BMW","Audi"]},
+  {id:59, name:"Coolant Temperature Sensor", brand:"Wahler", price:22, icon:"🌡️", category:"Sensors", verified:false, certs:["CE Certified"], sku:"WH-CT-09", lead:"1-2 days", stock:"In stock (55)", fitsMakes:["BMW","Volkswagen"]},
+  {id:60, name:"Brake Fluid (1L DOT4)", brand:"Bosch", price:14, icon:"🧪", category:"Brakes", verified:true, certs:["CE Certified"], sku:"BS-BF-D4", lead:"1 day", stock:"In stock (100+)", fitsMakes:["BMW","Volkswagen","Audi","Mercedes-Benz","Toyota","Renault","Honda"]},
+];
+
+const VEHICLE_DATA = {
+  "BMW":{models:["3 Series (E90/F30/G20)","5 Series (F10/G30)","X3 (F25)","X5 (F15)","1 Series (F20)","7 Series (G11)"],years:[2016,2017,2018,2019,2020,2021,2022,2023]},
+  "Volkswagen":{models:["Golf","Passat","Tiguan","Polo","Touareg"],years:[2017,2018,2019,2020,2021,2022,2023]},
+  "Audi":{models:["A4","A6","Q5","Q7","A3"],years:[2017,2018,2019,2020,2021,2022]},
+  "Mercedes-Benz":{models:["C-Class","E-Class","GLC","GLE","A-Class"],years:[2016,2017,2018,2019,2020,2021]},
+  "Toyota":{models:["Corolla","RAV4","Camry","Yaris"],years:[2018,2019,2020,2021,2022,2023]},
+  "Renault":{models:["Clio","Megane","Kadjar","Captur"],years:[2017,2018,2019,2020,2021]},
+  "Peugeot":{models:["208","3008","508","2008"],years:[2018,2019,2020,2021,2022]},
+  "Skoda":{models:["Octavia","Kodiaq","Fabia"],years:[2018,2019,2020,2021,2022]},
+  "Honda":{models:["Civic","CR-V","HR-V"],years:[2018,2019,2020,2021,2022]},
+  "Mazda":{models:["3","CX-5","6"],years:[2018,2019,2020,2021]}
+};
+
+/* ══ SUPPLIER DATA ══ */
+let supplierCatalog = [
+  {name:"Engine Oil Filter",sku:"MN-OF-1180",category:"Filters",price:18,stock:120,active:true},
+  {name:"Air Filter",sku:"MH-AF-2201",category:"Filters",price:22,stock:8,active:true},
+  {name:"Brake Disc (Front)",sku:"MN-BD-0345",category:"Brakes",price:145,stock:34,active:true},
+  {name:"Brake Pads Set",sku:"MN-BP-771",category:"Brakes",price:75,stock:3,active:true},
+  {name:"Timing Chain Kit",sku:"MN-TC-902",category:"Engine",price:260,stock:0,active:false},
+  {name:"Shock Absorber",sku:"SC-SA-224",category:"Suspension",price:122,stock:22,active:true},
+  {name:"Alternator",sku:"BS-AL-880",category:"Electrical",price:265,stock:4,active:true},
+];
+const supplierRfqs = [
+  {id:"RFQ-8841",workshop:"Alpha Garage Nuremberg",items:[{name:"Brake Disc",qty:2,price:145},{name:"Brake Pads",qty:1,price:75}],value:365,status:"new"},
+  {id:"RFQ-8905",workshop:"Motortech Berlin",items:[{name:"Alternator",qty:1,price:265}],value:265,status:"quoted"},
+  {id:"RFQ-8790",workshop:"TechStop Munich",items:[{name:"Air Filter",qty:3,price:22},{name:"Oil Filter",qty:3,price:18}],value:120,status:"accepted"},
+];
+const supplierOrders = [
+  {id:"PS-240601",workshop:"Alpha Garage Nuremberg",items:[{name:"Brake Disc (pair)",qty:2},{name:"Brake Pads Set",qty:1}],value:365,status:"fulfilling"},
+  {id:"PS-240589",workshop:"Motortech Berlin",items:[{name:"Shock Absorber",qty:2}],value:244,status:"shipped"},
+  {id:"PS-240571",workshop:"FastFix Stuttgart",items:[{name:"Oil Filter",qty:5},{name:"Air Filter",qty:5}],value:200,status:"delivered"},
+];
+
+/* ══ STATE ══ */
+let cart = [];
+let activeCategory = "all";
+let searchValue = "";
+let selectedVehicle = null;
+let sortMode = "default";
+let verifiedOnly = false;
+let currentPayStep = 1;
+let payMethod = "card";
+
+/* ══ HELPERS ══ */
+function money(v){ return "€" + v.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function showToast(msg){ document.getElementById("toastMsg").textContent = msg; const t = document.getElementById("toast"); t.classList.add("show"); clearTimeout(showToast._t); showToast._t = setTimeout(()=>t.classList.remove("show"), 2400); }
+function genOrderId(){ return "PS-" + (240600 + Math.floor(Math.random()*300)); }
+
+/* ══ PORTAL SWITCH ══ */
+function switchPortal(name){
+  document.querySelectorAll(".portal").forEach(p=>p.classList.remove("active"));
+  document.getElementById("portal" + name.charAt(0).toUpperCase() + name.slice(1)).classList.add("active");
+  document.querySelectorAll(".portal-switch button").forEach(b=>b.classList.toggle("active", b.getAttribute("onclick") === `switchPortal('${name}')`));
+  if(name === "supplier"){ renderSupplierDash(); }
+  if(name === "lookup"){ renderLookupParts(); selectLookupPart(2); }
+}
+
+/* ══ VEHICLE FITMENT ══ */
+const fitMake = document.getElementById("fitMake");
+const fitModel = document.getElementById("fitModel");
+const fitYear = document.getElementById("fitYear");
+Object.keys(VEHICLE_DATA).forEach(make=>{
+  const o = document.createElement("option"); o.value=make; o.textContent=make; fitMake.appendChild(o);
+});
+fitMake.addEventListener("change",()=>{
+  fitModel.innerHTML = '<option value="">Model</option>';
+  fitYear.innerHTML = '<option value="">Year</option>';
+  const d = VEHICLE_DATA[fitMake.value];
+  if(d){ d.models.forEach(m=>{const o=document.createElement("option");o.value=m;o.textContent=m;fitModel.appendChild(o);}); d.years.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;fitYear.appendChild(o);}); }
+});
+document.getElementById("fitApply").onclick = ()=>{
+  if(!fitMake.value||!fitModel.value){ document.getElementById("fitStatus").textContent="Choose make and model first."; document.getElementById("fitStatus").className="vin-status"; return; }
+  selectedVehicle = {make:fitMake.value,model:fitModel.value,year:fitYear.value};
+  const compat = PARTS.filter(p=>p.fitsMakes.includes(selectedVehicle.make)).length;
+  document.getElementById("fitStatus").textContent = compat + " parts confirmed compatible with your " + (fitYear.value||"") + " " + fitMake.value + " " + fitModel.value + ".";
+  document.getElementById("fitStatus").className = "vin-status ok";
+  renderParts(); showToast("Fitment applied — showing compatible parts first.");
+};
+
+/* ══ CATEGORIES ══ */
+function buildCategoryPills(){
+  const cats = ["all",...new Set(PARTS.map(p=>p.category))].sort();
+  const container = document.getElementById("catPills");
+  container.innerHTML = cats.map(c=>`<div class="cat-pill ${c==="all"?"active":""}" data-cat="${c}">${c==="all"?"All Parts":c}</div>`).join("");
+  container.querySelectorAll(".cat-pill").forEach(el=>{
+    el.onclick=()=>{ container.querySelectorAll(".cat-pill").forEach(x=>x.classList.remove("active")); el.classList.add("active"); activeCategory=el.dataset.cat; renderParts(); };
+  });
+}
+
+/* ══ SUPPLIER STRIP ══ */
+function buildSupplierStrip(){
+  const suppliers = [...new Set(PARTS.map(p=>p.brand))].sort();
+  document.getElementById("supplierStrip").innerHTML = suppliers.map(s=>`<span style="background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-dim);">${s}</span>`).join("");
+}
+
+/* ══ PART GRID ══ */
+function getStockPill(stock){
+  const s = String(stock).toLowerCase();
+  if(s.includes("bto")||s.includes("order")) return `<span class="pill stock-order">BTO</span>`;
+  if(s.includes("stock")) return `<span class="pill stock-ok">In Stock</span>`;
+  const n = parseInt(stock); if(!isNaN(n)){ if(n<=5) return `<span class="pill stock-low">Low (${n})</span>`; return `<span class="pill stock-ok">${n} units</span>`; }
+  return `<span class="pill">${stock}</span>`;
+}
+function getFilteredParts(){
+  let list = PARTS.filter(p=>{
+    if(activeCategory!=="all" && p.category!==activeCategory) return false;
+    if(verifiedOnly && !p.verified) return false;
+    const q = searchValue.toLowerCase();
+    if(q && !p.name.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q) && !p.category.toLowerCase().includes(q) && !p.sku.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  if(selectedVehicle){ list = [...list].sort((a,b)=>{ const af=a.fitsMakes.includes(selectedVehicle.make)?0:1; const bf=b.fitsMakes.includes(selectedVehicle.make)?0:1; return af-bf; }); }
+  if(sortMode==="price-asc") list=[...list].sort((a,b)=>a.price-b.price);
+  if(sortMode==="price-desc") list=[...list].sort((a,b)=>b.price-a.price);
+  if(sortMode==="name") list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
+  return list;
+}
+function renderParts(){
+  const list = getFilteredParts();
+  document.getElementById("resultCount").textContent = list.length + " of " + PARTS.length + " parts";
+  const grid = document.getElementById("productGrid");
+  if(!list.length){ grid.innerHTML='<div style="color:var(--text-faint);padding:40px;text-align:center;grid-column:1/-1;">No parts match your filter. Try clearing the search or category.</div>'; return; }
+  grid.innerHTML = list.map(p=>{
+    const fitsV = selectedVehicle ? p.fitsMakes.includes(selectedVehicle.make) : null;
+    const inCart = cart.some(c=>c.id===p.id);
+    return `<div class="card p-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div class="p-icon">${p.icon}</div>
+        <div class="p-badges">
+          ${p.verified?'<span class="pill verified">✓ OEM</span>':''}
+          ${fitsV===true?'<span class="pill fit">✓ Fits</span>':''}
+          ${fitsV===false?'<span class="pill nofit">Check fit</span>':''}
+        </div>
+      </div>
+      <h3>${p.name}</h3>
+      <div class="p-brand">${p.brand} · ${p.category}</div>
+      <div class="cert-tags">${p.certs.map(c=>`<span class="cert-tag">${c}</span>`).join("")}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">${getStockPill(p.stock)}<span style="font-size:11px;color:var(--text-faint);">${p.lead}</span></div>
+      <div class="p-price">${money(p.price)}</div>
+      <div class="p-card-foot">
+        <button class="btn btn-amber btn-sm" style="flex:1;" onclick="addToCart(${p.id})">${inCart?"✓ Added":"Add to RFQ"}</button>
+        <button class="btn btn-ghost btn-sm" onclick="openPartModal(${p.id})">View</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ══ CART ══ */
+function addToCart(id){
+  const p = PARTS.find(x=>x.id===id);
+  if(!p) return;
+  if(cart.find(c=>c.id===id)){ showToast(p.name+" is already in your RFQ"); return; }
+  cart.push(p); updateCartBadge(); renderCart();
+  showToast(p.name+" added to RFQ cart");
+  renderParts();
+}
+function removeFromCart(id){ cart = cart.filter(c=>c.id!==id); updateCartBadge(); renderCart(); renderParts(); }
+function updateCartBadge(){ document.getElementById("cartBadge").textContent=cart.length; }
+function renderCart(){
+  const items = document.getElementById("cartItems");
+  if(!cart.length){ items.innerHTML='<div class="cart-empty">Your RFQ cart is empty. Browse parts and add them here.</div>'; document.getElementById("cartTotal").textContent="€0"; return; }
+  items.innerHTML = cart.map((p,i)=>`<div class="cart-line">
+    <div class="info"><b>${p.name}</b><span>${p.brand} · ${money(p.price)}</span></div>
+    <button class="remove" onclick="removeFromCart(${p.id})">&times;</button>
+  </div>`).join("");
+  document.getElementById("cartTotal").textContent = money(cart.reduce((s,p)=>s+p.price,0));
+}
+function openDrawer(){ document.getElementById("rfqDrawer").classList.add("open"); document.getElementById("drawerOverlay").classList.add("show"); renderCart(); }
+function closeDrawer(){ document.getElementById("rfqDrawer").classList.remove("open"); document.getElementById("drawerOverlay").classList.remove("show"); }
+function clearCart(){ cart=[]; updateCartBadge(); renderCart(); renderParts(); showToast("Cart cleared"); }
+
+/* ══ PART MODAL ══ */
+function openPartModal(id){
+  const p = PARTS.find(x=>x.id===id); if(!p) return;
+  document.getElementById("mIcon").textContent=p.icon;
+  document.getElementById("mTitle").textContent=p.name;
+  document.getElementById("mBrand").textContent=p.brand+" · "+p.category;
+  document.getElementById("mPrice").textContent=money(p.price);
+  document.getElementById("mSku").textContent=p.sku;
+  document.getElementById("mLead").textContent=p.lead;
+  document.getElementById("mStock").textContent=p.stock;
+  document.getElementById("mSupplier").textContent=p.brand;
+  document.getElementById("mCerts").innerHTML=p.certs.map(c=>`<span class="cert-tag">${c}</span>`).join("");
+  document.getElementById("mAddCart").onclick=()=>{ addToCart(p.id); closeModal("partModal"); };
+  showModal("partModal");
+}
+
+/* ══ PAYMENT MODAL ══ */
+function openPayModal(){
+  if(!cart.length){ showToast("Add parts to your cart first"); return; }
+  closeDrawer();
+  currentPayStep=1; showModal("payModal");
+  payGoStep(1);
+}
+function payGoStep(step){
+  currentPayStep=step;
+  [1,2,3,4].forEach(i=>{
+    document.getElementById("payPane"+i).style.display = i===step?"block":"none";
+  });
+  const steps = document.querySelectorAll("#paySteps .pay-step");
+  steps.forEach((s,i)=>{
+    s.classList.remove("active","done");
+    if(i+1<step) s.classList.add("done");
+    else if(i+1===step) s.classList.add("active");
+  });
+  if(step===2||step===3){ renderPaySummary(); }
+  if(step===3){ document.getElementById("invoiceEmail").textContent=document.getElementById("pEmail").value||"max@alphagarage.demo"; }
+}
+function renderPaySummary(){
+  const sub = cart.reduce((s,p)=>s+p.price,0);
+  const shipping = {sameday:24,h24:12,order:6}[document.getElementById("pDelivery")?.value]||12;
+  const escrow = +(sub*0.02).toFixed(2);
+  const total = sub+shipping+escrow;
+  const rows = cart.map(p=>`<div class="pay-summary-line"><span>${p.name}</span><b>${money(p.price)}</b></div>`).join("");
+  const summary = `${rows}<div class="pay-summary-line"><span>Shipping (${document.getElementById("pCarrier")?.value||"DHL"})</span><b>${money(shipping)}</b></div><div class="pay-summary-line"><span>Platform escrow fee (2%)</span><b>${money(escrow)}</b></div><div class="pay-summary-line total"><span>Total</span><b>${money(total)}</b></div>`;
+  ["paySummary","paySummary2"].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=summary; });
+}
+function setPayMethod(method, el){
+  payMethod=method;
+  document.querySelectorAll(".pay-method-tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("cardForm").style.display=method==="card"?"block":"none";
+  document.getElementById("invoiceForm").style.display=method==="invoice"?"block":"none";
+  document.getElementById("creditForm").style.display=method==="credit"?"block":"none";
+}
+function formatCard(el){ el.value=el.value.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim(); }
+function formatExpiry(el){ el.value=el.value.replace(/\D/g,"").replace(/^(\d{2})(\d)/,"$1 / $2"); }
+document.getElementById("confirmPayBtn").onclick = ()=>{
+  const orderId = genOrderId();
+  const sub = cart.reduce((s,p)=>s+p.price,0);
+  const shipping = 12;
+  const total = sub + shipping + (sub*0.02);
+  document.getElementById("orderRef").textContent = orderId;
+  const steps = [
+    {label:"Order confirmed",desc:"Your order "+orderId+" has been created",state:"done"},
+    {label:"Payment captured",desc:"Funds held in escrow — "+money(total),state:"done"},
+    {label:"Supplier notified",desc:"Supplier has 4 hours to confirm",state:"active"},
+    {label:"Dispatch",desc:"Target: within 24 hours",state:"wait"},
+    {label:"Delivery",desc:"Live tracking in your portal",state:"wait"},
+    {label:"Core return",desc:"Old part collected for remanufacturing ♻",state:"wait"},
+  ];
+  document.getElementById("trackingSteps").innerHTML = steps.map(s=>`<div class="tracking-step"><div class="t-dot ${s.state}"></div><div class="t-step-text"><b>${s.label}</b><span>${s.desc}</span></div></div>`).join("");
+  payGoStep(4);
+  cart=[]; updateCartBadge(); renderCart(); renderParts();
+  showToast("Order "+orderId+" confirmed! 🎉");
+};
+
+/* ══ MODALS ══ */
+function showModal(id){ document.getElementById(id).classList.add("show"); }
+function closeModal(id){ document.getElementById(id).classList.remove("show"); }
+function closePayModal(){ closeModal("payModal"); currentPayStep=1; }
+
+document.getElementById("closePartModal").onclick = ()=>closeModal("partModal");
+document.getElementById("closePartModal2").onclick = ()=>closeModal("partModal");
+document.getElementById("closePayModal").onclick = closePayModal;
+document.getElementById("partModal").onclick = e=>{ if(e.target.id==="partModal") closeModal("partModal"); };
+document.getElementById("payModal").onclick = e=>{ if(e.target.id==="payModal") closePayModal(); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeModal("partModal"); closePayModal(); closeDrawer(); } });
+
+/* ══ NAV EVENTS ══ */
+document.getElementById("rfqBtn").onclick = openDrawer;
+document.getElementById("closeDrawer").onclick = closeDrawer;
+document.getElementById("drawerOverlay").onclick = closeDrawer;
+document.getElementById("proceedPayBtn").onclick = openPayModal;
+document.getElementById("clearCartBtn").onclick = clearCart;
+document.getElementById("searchInput").oninput = e=>{ searchValue=e.target.value; renderParts(); };
+document.getElementById("sortSelect").onchange = e=>{ sortMode=e.target.value; renderParts(); };
+document.getElementById("verifiedOnly").onchange = e=>{ verifiedOnly=e.target.checked; renderParts(); };
+
+/* ══ SUPPLIER PORTAL ══ */
+document.querySelectorAll(".nav-item").forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+  document.querySelectorAll(".page-section").forEach(s=>s.classList.remove("active")); document.getElementById("page-"+btn.dataset.page).classList.add("active");
+});
+/* ═══ GMV bar chart data ═══ */
+const gmvMonths = [
+  {mo:"Oct",gmv:9200,orders:28},
+  {mo:"Nov",gmv:11400,orders:36},
+  {mo:"Dec",gmv:14800,orders:44},
+  {mo:"Jan",gmv:10200,orders:31},
+  {mo:"Feb",gmv:12600,orders:39},
+  {mo:"Mar",gmv:13900,orders:42},
+  {mo:"Apr",gmv:15200,orders:47},
+  {mo:"May",gmv:16800,orders:52},
+  {mo:"Jun",gmv:18420,orders:57},
+];
+const catRevenue = [
+  {label:"Filters",pct:28,color:"#3B6E91"},
+  {label:"Brakes",pct:22,color:"#B5562F"},
+  {label:"Engine",pct:18,color:"#40916C"},
+  {label:"Electrical",pct:16,color:"#6B5CA5"},
+  {label:"Other",pct:16,color:"#5B6573"},
+];
+const pipelineStages = [
+  {label:"Incoming",count:12,color:"#3B6E91",pct:100},
+  {label:"Quoted",count:8,color:"#D4A017",pct:67},
+  {label:"Accepted",count:5,color:"#40916C",pct:42},
+  {label:"Ordered",count:4,color:"#2E8B6E",pct:33},
+  {label:"Shipped",count:3,color:"#4F8A3D",pct:25},
+];
+
+function renderGmvChart(){
+  const container = document.getElementById("gmvChart");
+  if(!container) return;
+  const maxGmv = Math.max(...gmvMonths.map(m=>m.gmv));
+  const maxOrd = Math.max(...gmvMonths.map(m=>m.orders));
+  container.innerHTML = gmvMonths.map(m=>{
+    const gmvH = Math.round((m.gmv/maxGmv)*120);
+    const ordH = Math.round((m.orders/maxOrd)*120);
+    return `<div class="bar-col">
+      <div style="display:flex;gap:2px;align-items:flex-end;height:132px;">
+        <div class="bar" style="height:${gmvH}px;width:10px;background:var(--steel);flex-shrink:0;">
+          <div class="bar-tooltip">€${(m.gmv/1000).toFixed(1)}k</div>
+        </div>
+        <div class="bar amber" style="height:${ordH}px;width:8px;flex-shrink:0;">
+          <div class="bar-tooltip">${m.orders} orders</div>
+        </div>
+      </div>
+      <div class="bar-lbl">${m.mo}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderPipeline(){
+  const container = document.getElementById("rfqPipeline");
+  if(!container) return;
+  container.innerHTML = pipelineStages.map(s=>`
+    <div class="pipeline-row">
+      <div class="pipeline-label">${s.label}</div>
+      <div class="pipeline-track">
+        <div class="pipeline-fill" style="width:${s.pct}%;background:${s.color};">${s.count}</div>
+      </div>
+      <div class="pipeline-count">${s.count}</div>
+    </div>`).join("");
+}
+
+function renderDonut(){
+  const svg = document.getElementById("donutSvg");
+  const legend = document.getElementById("donutLegend");
+  if(!svg||!legend) return;
+  const r=34, cx=45, cy=45, circ=2*Math.PI*r;
+  let offset=0;
+  let circles="<circle cx='45' cy='45' r='34' fill='none' stroke='var(--surface-3)' stroke-width='14'/>";
+  catRevenue.forEach(c=>{
+    const dash = (c.pct/100)*circ;
+    const gap = circ-dash;
+    // rotate so it starts from top (-90deg = -circ/4 offset)
+    circles += `<circle cx='${cx}' cy='${cy}' r='${r}' fill='none' stroke='${c.color}' stroke-width='14'
+      stroke-dasharray='${dash.toFixed(1)} ${gap.toFixed(1)}'
+      stroke-dashoffset='${(circ/4 - offset*circ/100).toFixed(1)}'
+      style='transition:stroke-dashoffset .5s'/>`;
+    offset += c.pct;
+  });
+  svg.innerHTML = circles;
+  legend.innerHTML = catRevenue.map(c=>`<div class="donut-item"><div class="donut-dot" style="background:${c.color};"></div><span>${c.label}</span><b>${c.pct}%</b></div>`).join("");
+}
+
+function renderSupplierDash(){
+  document.getElementById("kpiRfq").textContent = supplierRfqs.filter(r=>r.status==="new").length;
+  document.getElementById("kpiOrders").textContent = supplierOrders.filter(o=>o.status==="fulfilling").length;
+  document.getElementById("kpiCatalog").textContent = supplierCatalog.filter(c=>c.active).length;
+  document.getElementById("rfqCountBadge").textContent = supplierRfqs.filter(r=>r.status==="new").length;
+  document.getElementById("orderCountBadge").textContent = supplierOrders.filter(o=>o.status==="fulfilling").length;
+
+  // Render charts
+  renderGmvChart();
+  renderPipeline();
+  renderDonut();
+
+  // Activity feed
+  const activities = [
+    ...supplierRfqs.map(r=>({icon:"📋",text:`RFQ <b>${r.id}</b> from ${r.workshop}`,status:r.status,time:"2h ago"})),
+    ...supplierOrders.map(o=>({icon:"📦",text:`Order <b>${o.id}</b> — ${money(o.value)}`,status:o.status,time:"4h ago"})),
+    {icon:"♻",text:"Core return received from <b>Alpha Garage</b> — 2 brake discs",status:"delivered",time:"6h ago"},
+    {icon:"✅",text:"Escrow released for <b>PS-240571</b> — ${money(200)}",status:"accepted",time:"8h ago"},
+  ];
+  document.getElementById("dashActivity").innerHTML = activities.map(a=>`
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft);">
+      <div style="font-size:16px;flex-shrink:0;margin-top:1px;">${a.icon}</div>
+      <div style="flex:1;font-size:13.5px;">${a.text}</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <span class="status-pill ${a.status}" style="font-size:10.5px;">${a.status}</span>
+        <span style="font-size:11px;color:var(--text-faint);">${a.time}</span>
+      </div>
+    </div>`).join("");
+
+  renderRfq(); renderOrders(); renderCatalogTable();
+}
+function renderRfq(){
+  document.getElementById("rfqTbody").innerHTML = supplierRfqs.map(r=>`<tr>
+    <td><b class="mono">${r.id}</b></td>
+    <td>${r.items.map(i=>i.name+"×"+i.qty).join(", ")}</td>
+    <td>${r.workshop}</td>
+    <td>${money(r.value)}</td>
+    <td><span class="status-pill ${r.status}">${r.status}</span></td>
+    <td>${r.status==="new"?`<button class="btn btn-amber btn-sm" onclick="acceptRfq('${r.id}')">Quote</button>`:`<button class="btn btn-ghost btn-sm">View</button>`}</td>
+  </tr>`).join("");
+}
+function acceptRfq(id){ const r=supplierRfqs.find(x=>x.id===id); if(r){ r.status="quoted"; renderRfq(); renderSupplierDash(); showToast("Quote sent for "+id); } }
+function renderOrders(){
+  document.getElementById("orderTbody").innerHTML = supplierOrders.map(o=>`<tr>
+    <td><b class="mono">${o.id}</b></td>
+    <td>${o.items.map(i=>i.name+"×"+i.qty).join(", ")}</td>
+    <td>${o.workshop}</td>
+    <td>${money(o.value)}</td>
+    <td><span class="status-pill ${o.status}">${o.status}</span></td>
+    <td>${o.status==="fulfilling"?`<button class="btn btn-amber btn-sm" onclick="shipOrder('${o.id}')">Mark shipped</button>`:o.status==="shipped"?`<button class="btn btn-ghost btn-sm" onclick="deliverOrder('${o.id}')">Delivered</button>`:`<span style="color:var(--text-faint);font-size:12px;">—</span>`}</td>
+  </tr>`).join("");
+}
+function shipOrder(id){ const o=supplierOrders.find(x=>x.id===id); if(o){ o.status="shipped"; renderOrders(); renderSupplierDash(); showToast("Order "+id+" marked as shipped"); } }
+function deliverOrder(id){ const o=supplierOrders.find(x=>x.id===id); if(o){ o.status="delivered"; renderOrders(); renderSupplierDash(); showToast("Order "+id+" delivered ✓"); } }
+function renderCatalogTable(){
+  document.getElementById("catalogTbody").innerHTML = supplierCatalog.map((p,i)=>`<tr>
+    <td><b>${p.name}</b></td>
+    <td class="mono" style="font-size:12px;">${p.sku}</td>
+    <td>${p.category}</td>
+    <td>${money(p.price)}</td>
+    <td>
+      <div class="stock-bar-wrap">
+        <div class="stock-bar"><div class="stock-bar-fill ${p.stock<5?"low":""}" style="width:${Math.min(100,p.stock/120*100)}%"></div></div>
+        <span style="font-size:12px;">${p.stock}</span>
+      </div>
+    </td>
+    <td><span class="status-pill ${p.active?"active":"inactive"}">${p.active?"Active":"Inactive"}</span></td>
+    <td><button class="btn btn-ghost btn-sm" onclick="togglePart(${i})">${p.active?"Deactivate":"Activate"}</button></td>
+  </tr>`).join("");
+}
+function togglePart(i){ supplierCatalog[i].active=!supplierCatalog[i].active; renderCatalogTable(); renderSupplierDash(); showToast((supplierCatalog[i].active?"Activated":"Deactivated")+": "+supplierCatalog[i].name); }
+function openAddPart(){ showModal("addPartModal"); }
+function closeAddPart(){ closeModal("addPartModal"); }
+function saveNewPart(){
+  const name = document.getElementById("apName").value.trim();
+  const sku = document.getElementById("apSku").value.trim();
+  if(!name||!sku){ showToast("Name and SKU are required"); return; }
+  supplierCatalog.push({ name, sku, category:document.getElementById("apCat").value, price:+document.getElementById("apPrice").value||0, stock:+document.getElementById("apStock").value||0, active:document.getElementById("apStatus").value==="Active" });
+  renderCatalogTable(); renderSupplierDash(); closeAddPart();
+  ["apName","apSku","apPrice","apStock"].forEach(id=>document.getElementById(id).value="");
+  showToast("Part added to catalog ✓");
+}
+
+
+/* ══ EXPLODED PARTS LOOKUP ══ */
+const LOOKUP_PARTS = [
+  {id:1,name:"Left Headlight Assy",oem:"63117933954",price:485,suppliers:5},
+  {id:2,name:"Front Grille Assembly",oem:"51137499550",price:210,suppliers:4},
+  {id:3,name:"Right Headlight Assy",oem:"63117933955",price:485,suppliers:5},
+  {id:4,name:"Left Fog Light",oem:"63177466260",price:68,suppliers:6},
+  {id:5,name:"Right Fog Light",oem:"63177466261",price:68,suppliers:6},
+  {id:6,name:"Left Air Intake Grille",oem:"51117477637",price:42,suppliers:3},
+  {id:7,name:"Right Air Intake Grille",oem:"51117477638",price:42,suppliers:3},
+  {id:8,name:"Lower Bumper Lip Trim",oem:"51117499552",price:95,suppliers:4}
+];
+const LOOKUP_NUMBERS = ["","①","②","③","④","⑤","⑥","⑦","⑧"];
+function renderLookupParts(){
+  const list = document.getElementById("lookupPartsList");
+  if(!list) return;
+  list.innerHTML = LOOKUP_PARTS.map(p=>`<div class="lookup-row ${p.id===2?"active":""}" data-lookup-part="${p.id}">
+    <div class="lookup-num">${p.id}</div>
+    <div><div class="lookup-name">${p.name}</div><div class="lookup-oem">${p.oem}</div></div>
+    <div><div class="lookup-price">€${p.price}</div><div class="lookup-suppliers">${p.suppliers} suppliers</div></div>
+  </div>`).join("");
+}
+function selectLookupPart(id){
+  const part = LOOKUP_PARTS.find(p=>p.id===Number(id));
+  if(!part) return;
+  document.querySelectorAll(".lookup-row").forEach(row=>row.classList.toggle("active",Number(row.dataset.lookupPart)===part.id));
+  document.querySelectorAll(".lk-pin").forEach(pin=>pin.classList.toggle("active",Number(pin.dataset.lookupPart)===part.id));
+  document.getElementById("lookupSelectedNumber").textContent = LOOKUP_NUMBERS[part.id];
+  document.getElementById("lookupSelectedName").textContent = part.name;
+  document.getElementById("lookupSelectedOem").textContent = part.oem;
+  document.getElementById("lookupBestPrice").textContent = "€" + Math.max(28, part.price - 12);
+  document.getElementById("lookupOfficialPrice").textContent = "€" + Math.round(part.price * 1.26);
+  document.getElementById("lookupValuePrice").textContent = "€" + Math.max(24, part.price - 35);
+}
+document.addEventListener("click",e=>{
+  const lookupTarget = e.target.closest("[data-lookup-part]");
+  if(lookupTarget) selectLookupPart(lookupTarget.dataset.lookupPart);
+});
+
+/* ══ STATS ══ */
+document.getElementById("statParts").textContent = PARTS.length;
+document.getElementById("statSuppliers").textContent = new Set(PARTS.map(p=>p.brand)).size;
+
+/* ══ INIT ══ */
+buildCategoryPills();
+buildSupplierStrip();
+renderParts();
+renderLookupParts();
+selectLookupPart(2);
+</script>
+</body>
+</html>
