@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PartSphere — B2B Automotive Parts Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c10; --surface:#12151c; --surface-2:#181d26; --surface-3:#1e2531;
+  --border:#232a36; --border-soft:#1a202b;
+  --steel:#3B6E91; --steel-lt:#6FA1C2; --steel-ink:#040e18;
+  --amber:#E8A33D; --amber-dim:#c98a26; --amber-ink:#1a1200;
+  --sage:#40916C; --sage-bg:#0f2019;
+  --danger:#e15b5b; --danger-bg:#241213;
+  --warn:#d4a017; --warn-bg:#1f1800;
+  --text:#edeff2; --text-dim:#9099a8; --text-faint:#5a6274;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 20px 50px -20px rgba(0,0,0,.6);
+  --font-d:'Space Grotesk',sans-serif; --font-b:'Inter',sans-serif; --font-m:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:var(--font-b);background:var(--bg);color:var(--text);padding-bottom:80px;}
+h1,h2,h3,h4{font-family:var(--font-d);font-weight:600;margin:0;letter-spacing:-.01em;}
+p{margin:0;} button{font-family:inherit;} a{color:inherit;}
+::selection{background:var(--amber);color:var(--amber-ink);}
+.mono{font-family:var(--font-m);}
+
+/* ── TOP NAV ── */
+.topbar{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;gap:16px;padding:13px 24px;
+  background:rgba(10,12,16,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border-soft);
+}
+.logo{font-size:18px;font-weight:700;display:flex;align-items:center;gap:9px;white-space:nowrap;}
+.logo .mark{width:32px;height:32px;border-radius:10px;background:var(--steel);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.logo em{color:var(--steel);font-style:normal;}
+.portal-switch{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-left:auto;}
+.portal-switch button{border:none;background:none;color:var(--text-dim);padding:8px 16px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s;}
+.portal-switch button.active{background:var(--steel);color:#fff;}
+.topbar-actions{display:flex;align-items:center;gap:10px;}
+.icon-btn{background:var(--surface);border:1px solid var(--border);border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;color:var(--text);}
+.icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--amber);color:var(--amber-ink);font-size:9.5px;font-weight:700;border-radius:9px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:9px;font-weight:600;cursor:pointer;border:none;padding:9px 18px;font-size:13.5px;transition:.15s;}
+.btn-amber{background:var(--amber);color:var(--amber-ink);}
+.btn-amber:hover{background:#f0b558;}
+.btn-steel{background:var(--steel);color:#fff;}
+.btn-steel:hover{background:var(--steel-lt);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-dim);}
+.btn-ghost:hover{border-color:var(--steel);color:var(--text);}
+.btn-sm{padding:6px 13px;font-size:12px;}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger);}
+
+/* ── PORTAL VIEWS ── */
+.portal{display:none;} .portal.active{display:block;}
+
+/* ── SHARED SECTION ── */
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin:28px 0 16px;flex-wrap:wrap;gap:12px;}
+.section-head h2{font-size:20px;}
+.kicker{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:block;}
+.muted{color:var(--text-dim);}
+.result-count{font-size:12px;color:var(--text-faint);}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.card-pad{padding:20px;}
+
+/* ── HERO ── */
+.hero{padding:40px 0 32px;}
+.hero-inner{display:grid;grid-template-columns:1.3fr 0.9fr;gap:24px;align-items:center;}
+.hero h1{font-size:clamp(2rem,4vw,3.5rem);line-height:1.08;margin-bottom:14px;}
+.hero h1 em{color:var(--steel-lt);font-style:normal;}
+.hero p.lead{color:var(--text-dim);font-size:15px;line-height:1.6;max-width:480px;margin-bottom:24px;}
+.hero-stats{display:flex;gap:28px;}
+.hero-stats .stat b{display:block;font-family:var(--font-m);font-size:24px;color:var(--amber);}
+.hero-stats .stat span{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+
+/* VIN finder card */
+.vin-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.vin-card h3{font-size:15px;margin-bottom:14px;color:var(--text-dim);}
+.vin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.vin-grid input,.vin-grid select{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;width:100%;}
+.vin-grid input:focus,.vin-grid select:focus{outline:none;border-color:var(--steel);}
+.vin-status{font-size:12px;margin-top:10px;color:var(--text-faint);}
+.vin-status.ok{color:var(--sage);}
+
+/* ── FILTERS ── */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px;}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:0 14px;flex:1;min-width:200px;}
+.search-box input{background:none;border:none;color:var(--text);font-size:13.5px;padding:10px 0;width:100%;}
+.search-box input::placeholder{color:var(--text-faint);}
+.search-box svg{width:16px;height:16px;stroke:var(--text-faint);fill:none;stroke-width:2;flex-shrink:0;}
+.filter-select{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;}
+.cat-pills{display:flex;gap:7px;flex-wrap:wrap;}
+.cat-pill{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--text-dim);cursor:pointer;transition:.12s;}
+.cat-pill.active,.cat-pill:hover{background:var(--steel);border-color:var(--steel);color:#fff;}
+
+/* ── PRODUCT GRID ── */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px;}
+.p-card{display:flex;flex-direction:column;gap:10px;padding:16px;}
+.p-icon{width:52px;height:52px;border-radius:12px;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.p-icon.ps{font-size:14px;font-weight:700;color:var(--steel-lt);font-family:var(--font-m);}
+.p-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:4px 9px;font-size:11px;font-weight:600;}
+.pill.verified{background:rgba(64,145,108,.18);color:var(--sage);}
+.pill.fit{background:rgba(64,145,108,.18);color:var(--sage);}
+.pill.nofit{background:var(--danger-bg);color:var(--danger);}
+.pill.warn{background:var(--warn-bg);color:var(--warn);}
+.pill.stock-ok{background:rgba(64,145,108,.14);color:var(--sage);}
+.pill.stock-low{background:var(--warn-bg);color:var(--warn);}
+.pill.stock-order{background:var(--surface-3);color:var(--text-faint);}
+.p-card h3{font-size:14.5px;margin:0;line-height:1.3;}
+.p-brand{font-size:12px;color:var(--text-faint);}
+.p-price{font-family:var(--font-m);font-size:20px;color:var(--amber);margin-top:auto;}
+.p-card-foot{display:flex;gap:7px;margin-top:2px;}
+.cert-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.cert-tag{font-size:10.5px;background:var(--surface-3);border:1px solid var(--border);border-radius:5px;padding:3px 7px;color:var(--text-faint);}
+
+/* ── RFQ DRAWER ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1800;opacity:0;pointer-events:none;transition:.2s;}
+.overlay.show{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100%;width:360px;max-width:92vw;background:var(--surface);z-index:1900;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.25);}
+.drawer.open{transform:translateX(0);}
+.drawer-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.drawer-head h3{font-size:16px;}
+.drawer-close{background:none;border:none;color:var(--text-faint);font-size:22px;cursor:pointer;line-height:1;}
+.drawer-body{flex:1;overflow-y:auto;padding:16px 20px;}
+.drawer-foot{padding:16px 20px;border-top:1px solid var(--border);}
+.cart-line{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border-soft);gap:8px;}
+.cart-line .info b{font-size:13.5px;display:block;}
+.cart-line .info span{font-size:11.5px;color:var(--text-faint);}
+.cart-line .remove{background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:18px;flex-shrink:0;}
+.cart-line .remove:hover{color:var(--danger);}
+.cart-empty{color:var(--text-faint);font-size:13.5px;text-align:center;padding:32px 10px;}
+.cart-total{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin:14px 0;}
+.cart-total b{font-family:var(--font-m);color:var(--amber);}
+
+/* ── PART MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:2200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.18s;}
+.modal-bg.show{opacity:1;pointer-events:auto;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:640px;max-width:100%;max-height:88vh;overflow-y:auto;position:relative;padding:26px;}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-faint);font-size:24px;cursor:pointer;}
+.modal-inner{display:flex;gap:22px;flex-wrap:wrap;}
+.modal-icon{width:140px;height:140px;border-radius:14px;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:52px;flex-shrink:0;}
+.modal-info{flex:1;min-width:200px;}
+.modal-info h2{font-size:21px;margin-bottom:4px;}
+.modal-info .brand{color:var(--text-faint);font-size:13px;margin-bottom:10px;}
+.modal-price{font-family:var(--font-m);font-size:26px;color:var(--amber);font-weight:600;margin:10px 0;}
+.modal-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.modal-meta-item span{display:block;font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
+.modal-meta-item b{font-size:14px;}
+.modal-actions{display:flex;gap:10px;margin-top:18px;}
+
+/* ── PAYMENT MODAL ── */
+.pay-modal-box{width:560px;max-width:100%;}
+.pay-steps{display:flex;gap:0;margin-bottom:22px;border-radius:9px;overflow:hidden;border:1px solid var(--border);}
+.pay-step{flex:1;padding:10px 8px;text-align:center;font-size:12px;font-weight:600;background:var(--surface-3);color:var(--text-faint);transition:.15s;}
+.pay-step.active{background:var(--steel);color:#fff;}
+.pay-step.done{background:var(--sage-bg);color:var(--sage);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:12px;color:var(--text-faint);font-weight:600;}
+.form-group input,.form-group select{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:11px 13px;color:var(--text);font-size:13.5px;}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--steel);}
+.card-num-row{display:flex;gap:8px;align-items:center;}
+.card-icons{display:flex;gap:6px;flex-shrink:0;}
+.card-icon{width:36px;height:24px;border-radius:5px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;background:var(--surface-3);}
+.card-icon.visa{color:#1a72d9;}
+.card-icon.mc{color:#eb5c28;}
+.card-icon.amex{color:#36a5f0;}
+.pay-summary{background:var(--surface-3);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:18px;}
+.pay-summary-line{display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;}
+.pay-summary-line.total{font-weight:700;font-size:15px;border-top:1px solid var(--border);margin-top:8px;padding-top:10px;}
+.pay-summary-line.total b{font-family:var(--font-m);color:var(--amber);}
+.escrow-notice{background:rgba(64,145,108,.1);border:1px solid rgba(64,145,108,.3);border-radius:9px;padding:11px 14px;font-size:12.5px;color:var(--sage);margin:14px 0;display:flex;gap:9px;align-items:flex-start;}
+.escrow-notice svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;stroke:var(--sage);fill:none;stroke-width:2;}
+.pay-method-tabs{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;}
+.pay-method-tab{border:1px solid var(--border);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;background:var(--surface-2);color:var(--text-dim);cursor:pointer;transition:.14s;}
+.pay-method-tab.active{border-color:var(--steel);background:rgba(59,110,145,.15);color:var(--steel-lt);}
+.success-screen{text-align:center;padding:24px 0;}
+.success-icon{font-size:60px;margin-bottom:14px;}
+.success-screen h3{font-size:22px;margin-bottom:8px;}
+.success-screen p{color:var(--text-dim);font-size:14px;line-height:1.6;}
+.order-ref{font-family:var(--font-m);color:var(--amber);font-size:15px;margin:14px 0;}
+.tracking-steps{display:flex;flex-direction:column;gap:0;margin-top:18px;text-align:left;}
+.tracking-step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border-soft);}
+.tracking-step:last-child{border:none;}
+.t-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.t-dot.done{background:var(--sage);}
+.t-dot.active{background:var(--amber);}
+.t-dot.wait{background:var(--surface-3);border:2px solid var(--border);}
+.t-step-text b{font-size:13.5px;display:block;}
+.t-step-text span{font-size:11.5px;color:var(--text-faint);}
+
+/* ── SUPPLIER SIDEBAR ── */
+.shell{display:flex;min-height:100vh;}
+.sup-sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border-soft);display:flex;flex-direction:column;padding:18px 12px;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.sup-main{flex:1;min-width:0;padding:22px 24px;}
+.nav-group{margin-bottom:16px;}
+.nav-label{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;padding:0 9px;margin-bottom:5px;display:block;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:9px;border:none;background:none;color:var(--text-dim);font-size:13.5px;width:100%;text-align:left;cursor:pointer;font-family:var(--font-b);}
+.nav-item.active,.nav-item:hover{background:rgba(59,110,145,.18);color:var(--text);}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
+.nav-count{background:var(--surface-3);border-radius:20px;font-size:10.5px;padding:2px 7px;color:var(--text-dim);}
+.page-section{display:none;} .page-section.active{display:block;}
+.sup-stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:22px;}
+.sup-stat{padding:16px;}
+.sup-stat .label{font-size:11px;color:var(--text-faint);margin-bottom:4px;}
+.sup-stat .value{font-family:var(--font-m);font-size:22px;font-weight:600;}
+.sup-stat .sub{font-size:11px;color:var(--text-faint);margin-top:2px;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid var(--border);}
+td{padding:12px 12px;font-size:13.5px;border-bottom:1px solid var(--border-soft);vertical-align:top;}
+tr:last-child td{border:none;}
+.status-pill{display:inline-block;border-radius:20px;padding:4px 10px;font-size:11.5px;font-weight:600;}
+.status-pill.new{background:rgba(59,110,145,.2);color:var(--steel-lt);}
+.status-pill.quoted{background:var(--warn-bg);color:var(--warn);}
+.status-pill.accepted{background:var(--sage-bg);color:var(--sage);}
+.status-pill.fulfilling{background:rgba(232,163,61,.15);color:var(--amber);}
+.status-pill.shipped{background:rgba(64,145,108,.18);color:var(--sage);}
+.status-pill.delivered{background:var(--surface-3);color:var(--text-faint);}
+.status-pill.active{background:rgba(64,145,108,.18);color:var(--sage);}
+.status-pill.inactive{background:var(--surface-3);color:var(--text-faint);}
+.stock-bar-wrap{display:flex;align-items:center;gap:8px;}
+.stock-bar{width:60px;height:6px;background:var(--surface-3);border-radius:3px;overflow:hidden;}
+.stock-bar-fill{height:100%;border-radius:3px;background:var(--sage);}
+.stock-bar-fill.low{background:var(--danger);}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:13.5px;font-weight:500;opacity:0;pointer-events:none;transition:.22s;z-index:3000;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast .dot{width:7px;height:7px;border-radius:50%;background:var(--sage);flex-shrink:0;}
+
+/* ── CHARTS ── */
+.chart-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:16px;margin-top:16px;}
+.chart-wrap{padding:20px;}
+.chart-title{font-size:13.5px;font-weight:600;margin-bottom:4px;}
+.chart-sub{font-size:11.5px;color:var(--text-faint);margin-bottom:16px;}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:140px;border-bottom:1px solid var(--border);padding-bottom:0;position:relative;}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.bar-col .bar{width:100%;border-radius:4px 4px 0 0;background:var(--steel);transition:height .55s cubic-bezier(.4,0,.2,1);position:relative;min-height:4px;cursor:pointer;}
+.bar-col .bar:hover{filter:brightness(1.2);}
+.bar-col .bar.amber{background:var(--amber);}
+.bar-col .bar.sage{background:var(--sage);}
+.bar-col .bar.dual{background:linear-gradient(to top,var(--steel) 60%,var(--amber) 60%);}
+.bar-col .bar-lbl{font-size:9px;color:var(--text-faint);margin-top:6px;white-space:nowrap;}
+.bar-tooltip{display:none;position:absolute;top:-32px;left:50%;transform:translateX(-50%);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:10.5px;font-weight:600;color:var(--text);white-space:nowrap;z-index:20;}
+.bar-col .bar:hover .bar-tooltip{display:block;}
+.legend-row{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-faint);}
+.legend-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+.pipeline-wrap{display:flex;flex-direction:column;gap:9px;margin-top:6px;}
+.pipeline-row{display:flex;align-items:center;gap:10px;}
+.pipeline-label{font-size:11.5px;color:var(--text-dim);width:76px;flex-shrink:0;}
+.pipeline-track{flex:1;height:26px;background:var(--surface-3);border-radius:5px;overflow:hidden;}
+.pipeline-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:9px;font-size:11px;font-weight:600;color:#fff;transition:width .55s cubic-bezier(.4,0,.2,1);}
+.pipeline-count{font-size:12px;font-weight:700;color:var(--text-dim);width:22px;text-align:right;flex-shrink:0;}
+.donut-wrap{display:flex;align-items:center;gap:18px;margin-top:6px;}
+.donut-legend{display:flex;flex-direction:column;gap:9px;}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+.donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.donut-item span{color:var(--text-faint);}
+.donut-item b{font-family:var(--font-m);color:var(--text);}
+.y-lines{position:absolute;inset:0;pointer-events:none;}
+.y-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(255,255,255,.05);}
+@media(max-width:1000px){.chart-grid{grid-template-columns:1fr;}}
+@media(max-width:780px){
+  .hero-inner{grid-template-columns:1fr;}
+  .product-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+  .modal-inner{flex-direction:column;}
+  .modal-icon{width:100%;height:120px;}
+  .form-row{grid-template-columns:1fr;}
+  .shell{flex-direction:column;}
+  .sup-sidebar{width:100%;height:auto;position:relative;top:0;flex-direction:row;overflow-x:auto;padding:10px 14px;}
+  .nav-group{margin:0;display:flex;gap:4px;}
+  .nav-label{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<nav class="topbar">
+  <div class="logo"><div class="mark">PS</div>Part<em>Sphere</em></div>
+  <div class="portal-switch">
+    <button class="active" onclick="switchPortal('customer')">Workshop Portal</button>
+    <button onclick="switchPortal('supplier')">Supplier Console</button>
+  </div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="rfqBtn" title="RFQ Cart">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 8H6"/></svg>
+      <span class="badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ CUSTOMER PORTAL ═══ -->
+<div class="portal active" id="portalCustomer">
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <span class="kicker">OEM-verified B2B marketplace</span>
+        <h1>Parts that fit, from suppliers you can <em>trust.</em></h1>
+        <p class="lead">Search certified BMW and European automotive parts, confirm fitment against your vehicle, add to RFQ, and pay in escrow — all in one platform.</p>
+        <div class="hero-stats">
+          <div class="stat"><b id="statParts">0</b><span>Listed parts</span></div>
+          <div class="stat"><b id="statSuppliers">0</b><span>Suppliers</span></div>
+          <div class="stat"><b>&lt;4h</b><span>Supplier SLA</span></div>
+          <div class="stat"><b>&lt;24h</b><span>Dispatch</span></div>
+        </div>
+      </div>
+      <div class="vin-card">
+        <h3>🔍 Fitment Finder</h3>
+        <div class="vin-grid">
+          <select id="fitMake"><option value="">Make</option></select>
+          <select id="fitModel"><option value="">Model</option></select>
+          <select id="fitYear"><option value="">Year</option></select>
+          <input id="vinInput" placeholder="VIN (optional)" />
+        </div>
+        <button class="btn btn-steel" style="width:100%;margin-top:10px;" id="fitApply">Check fitment</button>
+        <div class="vin-status" id="fitStatus">Select a vehicle to filter compatible parts.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="text" placeholder="Search parts, brands, categories…" />
+    </div>
+    <select class="filter-select" id="sortSelect">
+      <option value="default">Sort: Default</option>
+      <option value="price-asc">Price: Low → High</option>
+      <option value="price-desc">Price: High → Low</option>
+      <option value="name">Name A–Z</option>
+    </select>
+    <label style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-dim);cursor:pointer;">
+      <input type="checkbox" id="verifiedOnly" style="accent-color:var(--sage);"> Verified only
+    </label>
+  </div>
+  <div class="cat-pills" id="catPills" style="margin-bottom:18px;"></div>
+  <div style="margin-bottom:12px;"><span class="result-count" id="resultCount"></span></div>
+
+  <!-- PRODUCT GRID -->
+  <div class="product-grid" id="productGrid"></div>
+
+  <!-- SUPPLIERS STRIP -->
+  <div class="section-head" style="margin-top:40px;"><h2>Verified OEM Suppliers</h2></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;" id="supplierStrip"></div>
+
+</div><!-- /wrap -->
+</div><!-- /portalCustomer -->
+
+<!-- ═══ SUPPLIER PORTAL ═══ -->
+<div class="portal" id="portalSupplier">
+  <div class="shell">
+    <aside class="sup-sidebar" id="supSidebar">
+      <div class="nav-group">
+        <span class="nav-label">Dashboard</span>
+        <button class="nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </button>
+      </div>
+      <div class="nav-group">
+        <span class="nav-label">Orders</span>
+        <button class="nav-item" data-page="rfq">
+          <svg viewBox="0 0 24 24"><path d="M9 12h6M9 16h6M9 8h6M5 21h14a1 1 0 0 0 1-1V6l-4-4H6a1 1 0 0 0-1 1v17"/></svg>
+          RFQ Inbox <span class="nav-count" id="rfqCountBadge">0</span>
+        </button>
+        <button class="nav-item" data-page="orders">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M5 16h6"/></svg>
+          Orders <span class="nav-count" id="orderCountBadge">0</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <span class="nav-label">Catalog</span>
+        <button class="nav-item" data-page="catalog">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Catalog
+        </button>
+      </div>
+      <div class="nav-group">
+        <span class="nav-label">Settings</span>
+        <button class="nav-item" data-page="settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </button>
+      </div>
+    </aside>
+    <main class="sup-main">
+      <!-- Dashboard -->
+      <div class="page-section active" id="page-dashboard">
+        <h2 style="margin-bottom:18px;">Supplier Dashboard <span style="font-size:13px;color:var(--text-faint);font-weight:400;">· Bosch Certified Hub</span></h2>
+
+        <!-- KPI strip -->
+        <div class="sup-stat-grid">
+          <div class="card sup-stat"><div class="label">Open RFQs</div><div class="value" id="kpiRfq">0</div><div class="sub">Needs response</div></div>
+          <div class="card sup-stat"><div class="label">Orders to fulfil</div><div class="value" id="kpiOrders">0</div><div class="sub">Active shipments</div></div>
+          <div class="card sup-stat"><div class="label">GMV this month</div><div class="value">€18,420</div><div class="sub" style="color:var(--sage);">▲ +12% vs last month</div></div>
+          <div class="card sup-stat"><div class="label">SLA hit rate</div><div class="value" style="color:var(--sage);">96%</div><div class="sub">Confirmation &lt;4h</div></div>
+          <div class="card sup-stat"><div class="label">Catalog parts</div><div class="value" id="kpiCatalog">0</div><div class="sub">Listed &amp; active</div></div>
+          <div class="card sup-stat"><div class="label">Core returns ♻</div><div class="value" style="color:var(--sage);">8</div><div class="sub">This month</div></div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="chart-grid">
+
+          <!-- Monthly GMV bar chart -->
+          <div class="card chart-wrap">
+            <div class="chart-title">Monthly Revenue (GMV) &amp; Orders</div>
+            <div class="chart-sub">Last 9 months — commission earned per month</div>
+            <div class="bar-chart" id="gmvChart"></div>
+            <div class="legend-row">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--steel);"></div>GMV (€)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div>Orders</div>
+            </div>
+          </div>
+
+          <!-- RFQ Pipeline funnel -->
+          <div class="card chart-wrap">
+            <div class="chart-title">RFQ Pipeline</div>
+            <div class="chart-sub">Current quote funnel status</div>
+            <div class="pipeline-wrap" id="rfqPipeline"></div>
+
+            <div style="margin-top:20px;">
+              <div class="chart-title">Revenue by Category</div>
+              <div class="chart-sub" style="margin-bottom:12px;">Share of GMV this month</div>
+              <div class="donut-wrap">
+                <svg class="donut-svg" width="90" height="90" viewBox="0 0 90 90" id="donutSvg">
+                  <circle cx="45" cy="45" r="34" fill="none" stroke="var(--surface-3)" stroke-width="14"/>
+                </svg>
+                <div class="donut-legend" id="donutLegend"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Activity feed -->
+        <div class="card card-pad" style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <h3>Recent activity</h3>
+            <span style="font-size:11.5px;color:var(--text-faint);">Last 24 hours</span>
+          </div>
+          <div id="dashActivity"></div>
+        </div>
+
+      </div>
+      <!-- RFQ -->
+      <div class="page-section" id="page-rfq">
+        <div class="section-head"><h2>RFQ Inbox</h2><button class="btn btn-ghost btn-sm" onclick="renderRfq()">Refresh</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>RFQ ID</th><th>Parts</th><th>Workshop</th><th>Value</th><th>Status</th><th>Action</th></tr></thead><tbody id="rfqTbody"></tbody></table></div>
+      </div>
+      <!-- Orders -->
+      <div class="page-section" id="page-orders">
+        <div class="section-head"><h2>Orders</h2></div>
+        <div class="card table-wrap"><table><thead><tr><th>Order ID</th><th>Parts</th><th>Workshop</th><th>Value</th><th>Status</th><th>Action</th></tr></thead><tbody id="orderTbody"></tbody></table></div>
+      </div>
+      <!-- Catalog -->
+      <div class="page-section" id="page-catalog">
+        <div class="section-head"><h2>My Catalog</h2><button class="btn btn-amber btn-sm" onclick="openAddPart()">+ Add Part</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>Name</th><th>SKU</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th></th></tr></thead><tbody id="catalogTbody"></tbody></table></div>
+      </div>
+      <!-- Settings -->
+      <div class="page-section" id="page-settings">
+        <h2 style="margin-bottom:18px;">Supplier Settings</h2>
+        <div class="card card-pad" style="max-width:560px;">
+          <h3 style="margin-bottom:16px;">Company Profile</h3>
+          <div class="form-row"><div class="form-group"><label>Company name</label><input value="Bosch Certified Hub"></div><div class="form-group"><label>Contact email</label><input value="ops@bosch-hub.demo"></div></div>
+          <div class="form-row"><div class="form-group"><label>Warehouse city</label><input value="Nuremberg, DE"></div><div class="form-group"><label>ProVerified status</label><select><option>✓ ProVerified</option><option>Under review</option></select></div></div>
+          <h3 style="margin:20px 0 14px;">Certifications</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="cert-tag" style="padding:6px 12px;">ISO 9001 ✓</span>
+            <span class="cert-tag" style="padding:6px 12px;">IATF 16949 ✓</span>
+            <span class="cert-tag" style="padding:6px 12px;">ISO 27001 ✓</span>
+            <span class="cert-tag" style="padding:6px 12px;">CAPA ✓</span>
+          </div>
+          <button class="btn btn-amber" style="margin-top:20px;">Save changes</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div><!-- /portalSupplier -->
+
+<!-- ═══ RFQ DRAWER ═══ -->
+<div class="overlay" id="drawerOverlay"></div>
+<div class="drawer" id="rfqDrawer">
+  <div class="drawer-head">
+    <h3>RFQ Cart</h3>
+    <button class="drawer-close" id="closeDrawer">&times;</button>
+  </div>
+  <div class="drawer-body" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="cart-total"><span>Estimated total</span><b id="cartTotal">€0</b></div>
+    <button class="btn btn-amber" style="width:100%;margin-bottom:8px;" id="proceedPayBtn">Proceed to payment</button>
+    <button class="btn btn-ghost" style="width:100%;font-size:12.5px;" id="clearCartBtn">Clear cart</button>
+  </div>
+</div>
+
+<!-- ═══ PART DETAIL MODAL ═══ -->
+<div class="modal-bg" id="partModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closePartModal">&times;</button>
+    <div class="modal-inner">
+      <div class="modal-icon" id="mIcon">🔧</div>
+      <div class="modal-info">
+        <h2 id="mTitle">—</h2>
+        <p class="brand" id="mBrand">—</p>
+        <div class="cert-tags" id="mCerts" style="margin-bottom:10px;"></div>
+        <div class="modal-price" id="mPrice">€0</div>
+        <div class="modal-meta">
+          <div class="modal-meta-item"><span>SKU</span><b class="mono" id="mSku">—</b></div>
+          <div class="modal-meta-item"><span>Lead time</span><b id="mLead">—</b></div>
+          <div class="modal-meta-item"><span>Stock</span><b id="mStock">—</b></div>
+          <div class="modal-meta-item"><span>Supplier</span><b id="mSupplier">—</b></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-amber" id="mAddCart">Add to RFQ</button>
+          <button class="btn btn-ghost" id="closePartModal2">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAYMENT MODAL ═══ -->
+<div class="modal-bg" id="payModal">
+  <div class="modal-box pay-modal-box">
+    <button class="modal-close" id="closePayModal">&times;</button>
+    <h2 id="payModalTitle" style="margin-bottom:18px;">Payment &amp; Checkout</h2>
+
+    <!-- Step indicators -->
+    <div class="pay-steps" id="paySteps">
+      <div class="pay-step active" id="payStep1">1. Details</div>
+      <div class="pay-step" id="payStep2">2. Payment</div>
+      <div class="pay-step" id="payStep3">3. Confirm</div>
+    </div>
+
+    <!-- Step 1: Delivery details -->
+    <div id="payPane1">
+      <div class="form-row">
+        <div class="form-group"><label>Workshop name</label><input id="pWorkshop" value="Alpha Garage Nuremberg" /></div>
+        <div class="form-group"><label>Contact name</label><input id="pContact" value="Max Mustermann" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email</label><input id="pEmail" type="email" value="max@alphagarage.demo" /></div>
+        <div class="form-group"><label>Phone</label><input id="pPhone" value="+49 911 555 108" /></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Delivery address</label><input id="pAddress" value="Fürther Straße 100, 90429 Nürnberg, Germany" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Delivery tier</label>
+          <select id="pDelivery">
+            <option value="24h">24h Standard (€12.00)</option>
+            <option value="sameday">Same-day Metro (€24.00)</option>
+            <option value="order">7–10 day Built-to-order (€6.00)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Core return</label>
+          <select id="pCore">
+            <option>Collect old part at delivery</option>
+            <option>Return later with prepaid label</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Carrier partner</label>
+          <select id="pCarrier">
+            <option>DHL Freight Auto</option>
+            <option>DB Schenker PartsLine</option>
+            <option>DPD Workshop Express</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-amber" style="width:100%;margin-top:8px;" onclick="payGoStep(2)">Continue to payment →</button>
+    </div>
+
+    <!-- Step 2: Payment -->
+    <div id="payPane2" style="display:none;">
+      <div class="pay-summary" id="paySummary"></div>
+      <div class="escrow-notice">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Your payment is held in <strong>escrow</strong> and only released to the supplier after dispatch is confirmed. If the supplier misses the 4h SLA, you get a full refund automatically.</span>
+      </div>
+      <div class="pay-method-tabs">
+        <button class="pay-method-tab active" onclick="setPayMethod('card',this)">💳 Card</button>
+        <button class="pay-method-tab" onclick="setPayMethod('invoice',this)">📄 Invoice + Escrow</button>
+        <button class="pay-method-tab" onclick="setPayMethod('credit',this)">🏦 Account Credit</button>
+      </div>
+      <div id="cardForm">
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Card number</label>
+            <div class="card-num-row">
+              <input id="pCard" placeholder="4242 4242 4242 4242" style="flex:1;" oninput="formatCard(this)" maxlength="19" />
+              <div class="card-icons">
+                <div class="card-icon visa">VISA</div>
+                <div class="card-icon mc">MC</div>
+                <div class="card-icon amex">AMEX</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Expiry</label><input id="pExpiry" placeholder="MM / YY" oninput="formatExpiry(this)" maxlength="7" /></div>
+          <div class="form-group"><label>CVC</label><input id="pCvc" placeholder="•••" maxlength="4" type="password" /></div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group"><label>Cardholder name</label><input id="pName" value="Max Mustermann" /></div>
+        </div>
+      </div>
+      <div id="invoiceForm" style="display:none;padding:14px;background:var(--surface-3);border-radius:9px;color:var(--text-dim);font-size:13.5px;">
+        Invoice will be sent to <strong id="invoiceEmail">max@alphagarage.demo</strong>. Payment held in escrow until dispatch confirmed. Net 30 terms apply.
+      </div>
+      <div id="creditForm" style="display:none;padding:14px;background:var(--surface-3);border-radius:9px;color:var(--text-dim);font-size:13.5px;">
+        Available credit: <strong style="color:var(--amber);">€4,200.00</strong>. Amount will be deducted after dispatch confirmation.
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-ghost" style="flex:1;" onclick="payGoStep(1)">← Back</button>
+        <button class="btn btn-amber" style="flex:2;" onclick="payGoStep(3)">Review order →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Confirm -->
+    <div id="payPane3" style="display:none;">
+      <div class="pay-summary" id="paySummary2"></div>
+      <div style="background:var(--surface-3);border-radius:9px;padding:13px;font-size:13px;color:var(--text-dim);margin-bottom:14px;">
+        <strong style="color:var(--text);">📦 What happens next</strong><br>
+        After confirming, the supplier has <strong>4 hours</strong> to accept. Parts will be dispatched within <strong>24 hours</strong>. You'll receive live tracking in your portal.
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-ghost" style="flex:1;" onclick="payGoStep(2)">← Back</button>
+        <button class="btn btn-amber" style="flex:2;" id="confirmPayBtn">✓ Confirm &amp; Pay</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div id="payPane4" style="display:none;">
+      <div class="success-screen">
+        <div class="success-icon">🎉</div>
+        <h3>Order confirmed!</h3>
+        <p>Your payment is in escrow. The supplier has been notified and has 4 hours to confirm.</p>
+        <div class="order-ref" id="orderRef">PS-000000</div>
+        <div class="tracking-steps" id="trackingSteps"></div>
+        <button class="btn btn-amber" style="margin-top:20px;width:100%;" onclick="closePayModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Part Modal (Supplier) -->
+<div class="modal-bg" id="addPartModal">
+  <div class="modal-box" style="max-width:480px;">
+    <button class="modal-close" onclick="closeAddPart()">&times;</button>
+    <h2 style="margin-bottom:18px;">Add Part to Catalog</h2>
+    <div class="form-row"><div class="form-group"><label>Part name</label><input id="apName" placeholder="e.g. Brake Disc Set" /></div><div class="form-group"><label>SKU</label><input id="apSku" placeholder="e.g. BD-001" /></div></div>
+    <div class="form-row"><div class="form-group"><label>Category</label><select id="apCat"><option>Brakes</option><option>Engine</option><option>Filters</option><option>Cooling</option><option>Electrical</option><option>Suspension</option><option>Steering</option><option>Drivetrain</option><option>Lighting</option><option>Safety</option></select></div><div class="form-group"><label>Price (€)</label><input id="apPrice" type="number" placeholder="0" /></div></div>
+    <div class="form-row"><div class="form-group"><label>Stock quantity</label><input id="apStock" type="number" placeholder="0" /></div><div class="form-group"><label>Status</label><select id="apStatus"><option>Active</option><option>Inactive</option></select></div></div>
+    <button class="btn btn-amber" style="width:100%;margin-top:8px;" onclick="saveNewPart()">Add to catalog</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><span class="dot"></span><span id="toastMsg"></span></div>
+
+<script>
+/* ═══════════════════════════════════
+   PARTS DATA — 50 BMW + Euro Parts
+═══════════════════════════════════ */
+const PARTS = [
+  // BMW Filtration
+  {id:1, name:"Engine Oil Filter", brand:"MANN+HUMMEL", price:18, icon:"🛢️", category:"Filters", verified:true, certs:["OEM Verified","ISO 9001"], sku:"MN-OF-1180", lead:"1-2 days", stock:"In stock (120)", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:2, name:"Air Filter", brand:"MAHLE", price:22, icon:"💨", category:"Filters", verified:true, certs:["OEM Verified"], sku:"MH-AF-2201", lead:"1-2 days", stock:"In stock (88)", fitsMakes:["BMW","Audi","Skoda"]},
+  {id:3, name:"Cabin Filter", brand:"MANN+HUMMEL", price:24, icon:"🌬️", category:"Filters", verified:true, certs:["OEM Verified","ISO 9001"], sku:"MN-CF-4422", lead:"1 day", stock:"In stock (64)", fitsMakes:["BMW","Volkswagen"]},
+  {id:4, name:"Fuel Filter", brand:"MAHLE", price:32, icon:"⛽", category:"Filters", verified:true, certs:["OEM Verified"], sku:"MH-FF-0991", lead:"2-3 days", stock:"In stock (42)", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Ignition
+  {id:5, name:"Spark Plugs (Set of 4)", brand:"NGK", price:42, icon:"✨", category:"Ignition", verified:true, certs:["ISO 9001","OEM Verified"], sku:"NGK-SP-411", lead:"1 day", stock:"In stock (120+)", fitsMakes:["BMW","Toyota","Honda"]},
+  {id:6, name:"Ignition Coil", brand:"Bosch", price:58, icon:"⚡", category:"Ignition", verified:true, certs:["OEM Verified","CE Certified"], sku:"BS-IC-902", lead:"2-3 days", stock:"18 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Brakes
+  {id:7, name:"Brake Pads (Front, set)", brand:"Jurid", price:58, icon:"🛞", category:"Brakes", verified:false, certs:["CE Certified","TÜV Inspected"], sku:"JU-BP-F55", lead:"2-3 days", stock:"34 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:8, name:"Brake Pads (Rear, set)", brand:"Textar", price:52, icon:"🛞", category:"Brakes", verified:false, certs:["CE Certified"], sku:"TX-BP-R44", lead:"2-3 days", stock:"28 units", fitsMakes:["BMW"]},
+  {id:9, name:"Brake Discs (pair)", brand:"Brembo", price:149, icon:"⭕", category:"Brakes", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"BR-BD-F22", lead:"3-4 days", stock:"12 units", fitsMakes:["BMW","Audi","Mercedes-Benz"]},
+  {id:10, name:"Brake Caliper", brand:"ATE", price:168, icon:"🔩", category:"Brakes", verified:false, certs:["CE Certified"], sku:"ATE-BC-011", lead:"4-5 days", stock:"8 units", fitsMakes:["BMW","Volkswagen"]},
+  // Suspension
+  {id:11, name:"Shock Absorber", brand:"Sachs", price:122, icon:"🛠️", category:"Suspension", verified:true, certs:["OEM Verified"], sku:"SC-SA-224", lead:"3 days", stock:"22 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:12, name:"Coil Spring", brand:"Eibach", price:80, icon:"🌀", category:"Suspension", verified:false, certs:["CE Certified"], sku:"EI-CS-440", lead:"3-4 days", stock:"16 units", fitsMakes:["BMW"]},
+  {id:13, name:"Lower Control Arm", brand:"Lemförder", price:98, icon:"🔧", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-CA-556", lead:"3-4 days", stock:"15 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:14, name:"Ball Joint", brand:"Lemförder", price:44, icon:"🔵", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-BJ-221", lead:"2 days", stock:"30 units", fitsMakes:["BMW","Audi"]},
+  {id:15, name:"Tie Rod End", brand:"TRW", price:40, icon:"🔗", category:"Steering", verified:true, certs:["OEM Verified"], sku:"TRW-TR-009", lead:"2 days", stock:"In stock (44)", fitsMakes:["BMW","Volkswagen"]},
+  // Steering
+  {id:16, name:"Steering Rack", brand:"ZF", price:625, icon:"🎯", category:"Steering", verified:true, certs:["OEM Verified","IATF 16949"], sku:"ZF-SR-033", lead:"7 days", stock:"2 units (BTO)", fitsMakes:["BMW"]},
+  {id:17, name:"Power Steering Pump", brand:"ZF", price:315, icon:"💧", category:"Steering", verified:true, certs:["OEM Verified"], sku:"ZF-PSP-07", lead:"5-7 days", stock:"5 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Drivetrain
+  {id:18, name:"Clutch Kit", brand:"LuK", price:285, icon:"⚙️", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001","TÜV Inspected"], sku:"LUK-CK-778", lead:"5-6 days", stock:"8 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:19, name:"Dual Mass Flywheel", brand:"LuK", price:415, icon:"🌐", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"LUK-DM-201", lead:"6 days", stock:"4 units", fitsMakes:["BMW"]},
+  {id:20, name:"Automatic Transmission (reman.)", brand:"ZF Friedrichshafen", price:3200, icon:"⚡", category:"Drivetrain", verified:true, certs:["OEM Verified","IATF 16949","TÜV Inspected"], sku:"ZF-AT-8HP", lead:"10 days (BTO)", stock:"1 unit (BTO)", fitsMakes:["BMW","Audi"]},
+  {id:21, name:"Driveshaft", brand:"GKN", price:345, icon:"🔄", category:"Drivetrain", verified:true, certs:["OEM Verified"], sku:"GKN-DS-114", lead:"5 days", stock:"6 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:22, name:"CV Joint", brand:"GKN", price:88, icon:"🔩", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"GKN-CV-330", lead:"2-3 days", stock:"19 units", fitsMakes:["BMW","Toyota","Honda"]},
+  {id:23, name:"Wheel Bearing", brand:"SKF", price:74, icon:"⭕", category:"Drivetrain", verified:true, certs:["OEM Verified","ISO 9001"], sku:"SKF-WB-207", lead:"1-2 days", stock:"In stock (38)", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Cooling
+  {id:24, name:"Water Pump", brand:"Saleri", price:70, icon:"💧", category:"Cooling", verified:false, certs:["CE Certified"], sku:"SL-WP-119", lead:"2 days", stock:"27 units", fitsMakes:["BMW","Toyota","Mazda"]},
+  {id:25, name:"Thermostat", brand:"Wahler", price:28, icon:"🌡️", category:"Cooling", verified:false, certs:["CE Certified"], sku:"WH-TH-063", lead:"1-2 days", stock:"41 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:26, name:"Radiator", brand:"Behr", price:188, icon:"🧊", category:"Cooling", verified:false, certs:["CE Certified"], sku:"BH-RD-556", lead:"4-5 days", stock:"9 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:27, name:"Cooling Fan", brand:"Valeo", price:148, icon:"🌬️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-CF-887", lead:"3-4 days", stock:"11 units", fitsMakes:["BMW","Renault","Peugeot"]},
+  // Electrical
+  {id:28, name:"Alternator", brand:"Bosch", price:265, icon:"🔌", category:"Electrical", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"BS-AL-880", lead:"5 days", stock:"4 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:29, name:"Starter Motor", brand:"Bosch", price:225, icon:"🔑", category:"Electrical", verified:true, certs:["OEM Verified"], sku:"BS-SM-341", lead:"4 days", stock:"7 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:30, name:"Battery (AGM)", brand:"Varta", price:198, icon:"🔋", category:"Electrical", verified:false, certs:["CE Certified"], sku:"VA-BT-H8", lead:"1-2 days", stock:"In stock (25)", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  {id:31, name:"Oxygen Sensor", brand:"Bosch", price:90, icon:"🔬", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-O2-551", lead:"2 days", stock:"18 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:32, name:"Mass Air Flow Sensor", brand:"Bosch", price:78, icon:"💨", category:"Sensors", verified:true, certs:["OEM Verified","CE Certified"], sku:"BS-MAF-77", lead:"2 days", stock:"14 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  // Fuel
+  {id:33, name:"Fuel Injector", brand:"Bosch", price:118, icon:"⛽", category:"Engine", verified:true, certs:["OEM Verified","IATF 16949"], sku:"BS-FI-202", lead:"3 days", stock:"22 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:34, name:"Fuel Pump", brand:"VDO (Continental)", price:168, icon:"⛽", category:"Engine", verified:true, certs:["OEM Verified","ISO 9001"], sku:"VDO-FP-207", lead:"4 days", stock:"9 units", fitsMakes:["BMW","Audi","Volkswagen"]},
+  // Engine Timing
+  {id:35, name:"Timing Chain Tensioner", brand:"INA", price:50, icon:"⛓️", category:"Engine", verified:true, certs:["OEM Verified"], sku:"INA-TT-88", lead:"2-3 days", stock:"17 units", fitsMakes:["BMW","Audi"]},
+  {id:36, name:"Belt Tensioner", brand:"INA", price:36, icon:"⚙️", category:"Engine", verified:true, certs:["OEM Verified"], sku:"INA-BT-33", lead:"2 days", stock:"In stock (32)", fitsMakes:["BMW","Volkswagen"]},
+  {id:37, name:"Serpentine Belt", brand:"Continental", price:22, icon:"🔄", category:"Engine", verified:true, certs:["OEM Verified"], sku:"CN-SB-011", lead:"1 day", stock:"In stock (55)", fitsMakes:["BMW","Audi","Mercedes-Benz"]},
+  {id:38, name:"Timing Chain", brand:"IWIS", price:98, icon:"⛓️", category:"Engine", verified:false, certs:["CE Certified","ISO 9001"], sku:"IW-TC-902", lead:"5 days", stock:"5 units", fitsMakes:["BMW","Audi","Skoda"]},
+  {id:39, name:"Turbocharger", brand:"Garrett", price:955, icon:"🌀", category:"Engine", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"GR-TB-111", lead:"7 days", stock:"2 units (BTO)", fitsMakes:["BMW","Audi"]},
+  {id:40, name:"Oil Pump", brand:"Febi", price:132, icon:"🛢️", category:"Engine", verified:false, certs:["ISO 9001"], sku:"FB-OP-654", lead:"3 days", stock:"11 units", fitsMakes:["BMW","Volkswagen","Skoda"]},
+  // Mounts
+  {id:41, name:"Engine Mount", brand:"Corteco", price:64, icon:"🔩", category:"Engine", verified:false, certs:["CE Certified"], sku:"CO-EM-77", lead:"2-3 days", stock:"20 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:42, name:"Transmission Mount", brand:"Corteco", price:60, icon:"🔩", category:"Drivetrain", verified:false, certs:["CE Certified"], sku:"CO-TM-44", lead:"2-3 days", stock:"16 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Exterior / Lighting
+  {id:43, name:"Wiper Blades (pair)", brand:"Bosch", price:28, icon:"🌧️", category:"Exterior", verified:true, certs:["OEM Verified"], sku:"BS-WB-22", lead:"1 day", stock:"In stock (80+)", fitsMakes:["BMW","Volkswagen","Audi","Mercedes-Benz"]},
+  {id:44, name:"Headlamp Assembly (LED)", brand:"Hella", price:485, icon:"💡", category:"Lighting", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"HL-HLA-44", lead:"7 days (BTO)", stock:"BTO order", fitsMakes:["BMW"]},
+  {id:45, name:"Tail Lamp Assembly", brand:"Hella", price:215, icon:"🔴", category:"Lighting", verified:true, certs:["OEM Verified"], sku:"HL-TLA-88", lead:"5 days", stock:"6 units", fitsMakes:["BMW"]},
+  // Body Electronics
+  {id:46, name:"Window Regulator", brand:"Brose", price:118, icon:"🪟", category:"Body Electronics", verified:true, certs:["OEM Verified"], sku:"BR-WR-012", lead:"3-4 days", stock:"10 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  {id:47, name:"Door Lock Actuator", brand:"Brose", price:70, icon:"🔒", category:"Body Electronics", verified:true, certs:["OEM Verified","CE Certified"], sku:"BR-DL-089", lead:"2-3 days", stock:"18 units", fitsMakes:["BMW","Audi"]},
+  // Safety
+  {id:48, name:"Airbag Module", brand:"Autoliv", price:355, icon:"🛡️", category:"Safety", verified:true, certs:["OEM Verified","TÜV Inspected","IATF 16949"], sku:"AU-AB-001", lead:"7 days (BTO)", stock:"BTO order", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:49, name:"Seat Belt Assembly", brand:"Autoliv", price:148, icon:"🎽", category:"Safety", verified:true, certs:["OEM Verified","TÜV Inspected"], sku:"AU-SB-22", lead:"5 days", stock:"8 units", fitsMakes:["BMW","Mercedes-Benz"]},
+  // Climate
+  {id:50, name:"HVAC Blower Motor", brand:"Valeo", price:95, icon:"❄️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-BM-334", lead:"3 days", stock:"13 units", fitsMakes:["BMW","Renault"]},
+  {id:51, name:"Climate Control Unit", brand:"Valeo", price:268, icon:"🌡️", category:"Cooling", verified:true, certs:["OEM Verified"], sku:"VL-CC-987", lead:"5-6 days", stock:"5 units", fitsMakes:["BMW"]},
+  {id:52, name:"ABS Control Module", brand:"Bosch", price:425, icon:"⚙️", category:"Sensors", verified:true, certs:["OEM Verified","TÜV Inspected","IATF 16949"], sku:"BS-ABS-9", lead:"6-7 days", stock:"3 units", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  // Extra Euro parts
+  {id:53, name:"Clutch Master Cylinder", brand:"LuK", price:85, icon:"⚙️", category:"Drivetrain", verified:true, certs:["OEM Verified"], sku:"LUK-CM-55", lead:"3 days", stock:"14 units", fitsMakes:["BMW","Volkswagen"]},
+  {id:54, name:"EGR Valve", brand:"Bosch", price:142, icon:"🔄", category:"Engine", verified:true, certs:["OEM Verified","CE Certified"], sku:"BS-EGR-3", lead:"4 days", stock:"9 units", fitsMakes:["BMW","Mercedes-Benz","Audi"]},
+  {id:55, name:"Anti-Roll Bar Link", brand:"Lemförder", price:32, icon:"🔗", category:"Suspension", verified:false, certs:["CE Certified"], sku:"LF-AR-88", lead:"2 days", stock:"28 units", fitsMakes:["BMW","Volkswagen","Audi"]},
+  {id:56, name:"Throttle Body", brand:"Continental", price:195, icon:"🌀", category:"Engine", verified:true, certs:["OEM Verified","CE Certified"], sku:"CN-TB-44", lead:"4-5 days", stock:"7 units", fitsMakes:["BMW","Audi"]},
+  {id:57, name:"Crankshaft Position Sensor", brand:"Bosch", price:55, icon:"📡", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-CP-11", lead:"2 days", stock:"21 units", fitsMakes:["BMW","Volkswagen","Mercedes-Benz"]},
+  {id:58, name:"Camshaft Sensor", brand:"Bosch", price:48, icon:"📡", category:"Sensors", verified:true, certs:["OEM Verified"], sku:"BS-CS-22", lead:"2 days", stock:"19 units", fitsMakes:["BMW","Audi"]},
+  {id:59, name:"Coolant Temperature Sensor", brand:"Wahler", price:22, icon:"🌡️", category:"Sensors", verified:false, certs:["CE Certified"], sku:"WH-CT-09", lead:"1-2 days", stock:"In stock (55)", fitsMakes:["BMW","Volkswagen"]},
+  {id:60, name:"Brake Fluid (1L DOT4)", brand:"Bosch", price:14, icon:"🧪", category:"Brakes", verified:true, certs:["CE Certified"], sku:"BS-BF-D4", lead:"1 day", stock:"In stock (100+)", fitsMakes:["BMW","Volkswagen","Audi","Mercedes-Benz","Toyota","Renault","Honda"]},
+];
+
+const VEHICLE_DATA = {
+  "BMW":{models:["3 Series (E90/F30/G20)","5 Series (F10/G30)","X3 (F25)","X5 (F15)","1 Series (F20)","7 Series (G11)"],years:[2016,2017,2018,2019,2020,2021,2022,2023]},
+  "Volkswagen":{models:["Golf","Passat","Tiguan","Polo","Touareg"],years:[2017,2018,2019,2020,2021,2022,2023]},
+  "Audi":{models:["A4","A6","Q5","Q7","A3"],years:[2017,2018,2019,2020,2021,2022]},
+  "Mercedes-Benz":{models:["C-Class","E-Class","GLC","GLE","A-Class"],years:[2016,2017,2018,2019,2020,2021]},
+  "Toyota":{models:["Corolla","RAV4","Camry","Yaris"],years:[2018,2019,2020,2021,2022,2023]},
+  "Renault":{models:["Clio","Megane","Kadjar","Captur"],years:[2017,2018,2019,2020,2021]},
+  "Peugeot":{models:["208","3008","508","2008"],years:[2018,2019,2020,2021,2022]},
+  "Skoda":{models:["Octavia","Kodiaq","Fabia"],years:[2018,2019,2020,2021,2022]},
+  "Honda":{models:["Civic","CR-V","HR-V"],years:[2018,2019,2020,2021,2022]},
+  "Mazda":{models:["3","CX-5","6"],years:[2018,2019,2020,2021]}
+};
+
+/* ══ SUPPLIER DATA ══ */
+let supplierCatalog = [
+  {name:"Engine Oil Filter",sku:"MN-OF-1180",category:"Filters",price:18,stock:120,active:true},
+  {name:"Air Filter",sku:"MH-AF-2201",category:"Filters",price:22,stock:8,active:true},
+  {name:"Brake Disc (Front)",sku:"MN-BD-0345",category:"Brakes",price:145,stock:34,active:true},
+  {name:"Brake Pads Set",sku:"MN-BP-771",category:"Brakes",price:75,stock:3,active:true},
+  {name:"Timing Chain Kit",sku:"MN-TC-902",category:"Engine",price:260,stock:0,active:false},
+  {name:"Shock Absorber",sku:"SC-SA-224",category:"Suspension",price:122,stock:22,active:true},
+  {name:"Alternator",sku:"BS-AL-880",category:"Electrical",price:265,stock:4,active:true},
+];
+const supplierRfqs = [
+  {id:"RFQ-8841",workshop:"Alpha Garage Nuremberg",items:[{name:"Brake Disc",qty:2,price:145},{name:"Brake Pads",qty:1,price:75}],value:365,status:"new"},
+  {id:"RFQ-8905",workshop:"Motortech Berlin",items:[{name:"Alternator",qty:1,price:265}],value:265,status:"quoted"},
+  {id:"RFQ-8790",workshop:"TechStop Munich",items:[{name:"Air Filter",qty:3,price:22},{name:"Oil Filter",qty:3,price:18}],value:120,status:"accepted"},
+];
+const supplierOrders = [
+  {id:"PS-240601",workshop:"Alpha Garage Nuremberg",items:[{name:"Brake Disc (pair)",qty:2},{name:"Brake Pads Set",qty:1}],value:365,status:"fulfilling"},
+  {id:"PS-240589",workshop:"Motortech Berlin",items:[{name:"Shock Absorber",qty:2}],value:244,status:"shipped"},
+  {id:"PS-240571",workshop:"FastFix Stuttgart",items:[{name:"Oil Filter",qty:5},{name:"Air Filter",qty:5}],value:200,status:"delivered"},
+];
+
+/* ══ STATE ══ */
+let cart = [];
+let activeCategory = "all";
+let searchValue = "";
+let selectedVehicle = null;
+let sortMode = "default";
+let verifiedOnly = false;
+let currentPayStep = 1;
+let payMethod = "card";
+
+/* ══ HELPERS ══ */
+function money(v){ return "€" + v.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function showToast(msg){ document.getElementById("toastMsg").textContent = msg; const t = document.getElementById("toast"); t.classList.add("show"); clearTimeout(showToast._t); showToast._t = setTimeout(()=>t.classList.remove("show"), 2400); }
+function genOrderId(){ return "PS-" + (240600 + Math.floor(Math.random()*300)); }
+
+/* ══ PORTAL SWITCH ══ */
+function switchPortal(name){
+  document.querySelectorAll(".portal").forEach(p=>p.classList.remove("active"));
+  document.getElementById("portal" + name.charAt(0).toUpperCase() + name.slice(1)).classList.add("active");
+  document.querySelectorAll(".portal-switch button").forEach((b,i)=>b.classList.toggle("active", (i===0&&name==="customer")||(i===1&&name==="supplier")));
+  if(name === "supplier"){ renderSupplierDash(); }
+}
+
+/* ══ VEHICLE FITMENT ══ */
+const fitMake = document.getElementById("fitMake");
+const fitModel = document.getElementById("fitModel");
+const fitYear = document.getElementById("fitYear");
+Object.keys(VEHICLE_DATA).forEach(make=>{
+  const o = document.createElement("option"); o.value=make; o.textContent=make; fitMake.appendChild(o);
+});
+fitMake.addEventListener("change",()=>{
+  fitModel.innerHTML = '<option value="">Model</option>';
+  fitYear.innerHTML = '<option value="">Year</option>';
+  const d = VEHICLE_DATA[fitMake.value];
+  if(d){ d.models.forEach(m=>{const o=document.createElement("option");o.value=m;o.textContent=m;fitModel.appendChild(o);}); d.years.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;fitYear.appendChild(o);}); }
+});
+document.getElementById("fitApply").onclick = ()=>{
+  if(!fitMake.value||!fitModel.value){ document.getElementById("fitStatus").textContent="Choose make and model first."; document.getElementById("fitStatus").className="vin-status"; return; }
+  selectedVehicle = {make:fitMake.value,model:fitModel.value,year:fitYear.value};
+  const compat = PARTS.filter(p=>p.fitsMakes.includes(selectedVehicle.make)).length;
+  document.getElementById("fitStatus").textContent = compat + " parts confirmed compatible with your " + (fitYear.value||"") + " " + fitMake.value + " " + fitModel.value + ".";
+  document.getElementById("fitStatus").className = "vin-status ok";
+  renderParts(); showToast("Fitment applied — showing compatible parts first.");
+};
+
+/* ══ CATEGORIES ══ */
+function buildCategoryPills(){
+  const cats = ["all",...new Set(PARTS.map(p=>p.category))].sort();
+  const container = document.getElementById("catPills");
+  container.innerHTML = cats.map(c=>`<div class="cat-pill ${c==="all"?"active":""}" data-cat="${c}">${c==="all"?"All Parts":c}</div>`).join("");
+  container.querySelectorAll(".cat-pill").forEach(el=>{
+    el.onclick=()=>{ container.querySelectorAll(".cat-pill").forEach(x=>x.classList.remove("active")); el.classList.add("active"); activeCategory=el.dataset.cat; renderParts(); };
+  });
+}
+
+/* ══ SUPPLIER STRIP ══ */
+function buildSupplierStrip(){
+  const suppliers = [...new Set(PARTS.map(p=>p.brand))].sort();
+  document.getElementById("supplierStrip").innerHTML = suppliers.map(s=>`<span style="background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-dim);">${s}</span>`).join("");
+}
+
+/* ══ PART GRID ══ */
+function getStockPill(stock){
+  const s = String(stock).toLowerCase();
+  if(s.includes("bto")||s.includes("order")) return `<span class="pill stock-order">BTO</span>`;
+  if(s.includes("stock")) return `<span class="pill stock-ok">In Stock</span>`;
+  const n = parseInt(stock); if(!isNaN(n)){ if(n<=5) return `<span class="pill stock-low">Low (${n})</span>`; return `<span class="pill stock-ok">${n} units</span>`; }
+  return `<span class="pill">${stock}</span>`;
+}
+function getFilteredParts(){
+  let list = PARTS.filter(p=>{
+    if(activeCategory!=="all" && p.category!==activeCategory) return false;
+    if(verifiedOnly && !p.verified) return false;
+    const q = searchValue.toLowerCase();
+    if(q && !p.name.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q) && !p.category.toLowerCase().includes(q) && !p.sku.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  if(selectedVehicle){ list = [...list].sort((a,b)=>{ const af=a.fitsMakes.includes(selectedVehicle.make)?0:1; const bf=b.fitsMakes.includes(selectedVehicle.make)?0:1; return af-bf; }); }
+  if(sortMode==="price-asc") list=[...list].sort((a,b)=>a.price-b.price);
+  if(sortMode==="price-desc") list=[...list].sort((a,b)=>b.price-a.price);
+  if(sortMode==="name") list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
+  return list;
+}
+function renderParts(){
+  const list = getFilteredParts();
+  document.getElementById("resultCount").textContent = list.length + " of " + PARTS.length + " parts";
+  const grid = document.getElementById("productGrid");
+  if(!list.length){ grid.innerHTML='<div style="color:var(--text-faint);padding:40px;text-align:center;grid-column:1/-1;">No parts match your filter. Try clearing the search or category.</div>'; return; }
+  grid.innerHTML = list.map(p=>{
+    const fitsV = selectedVehicle ? p.fitsMakes.includes(selectedVehicle.make) : null;
+    const inCart = cart.some(c=>c.id===p.id);
+    return `<div class="card p-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div class="p-icon">${p.icon}</div>
+        <div class="p-badges">
+          ${p.verified?'<span class="pill verified">✓ OEM</span>':''}
+          ${fitsV===true?'<span class="pill fit">✓ Fits</span>':''}
+          ${fitsV===false?'<span class="pill nofit">Check fit</span>':''}
+        </div>
+      </div>
+      <h3>${p.name}</h3>
+      <div class="p-brand">${p.brand} · ${p.category}</div>
+      <div class="cert-tags">${p.certs.map(c=>`<span class="cert-tag">${c}</span>`).join("")}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">${getStockPill(p.stock)}<span style="font-size:11px;color:var(--text-faint);">${p.lead}</span></div>
+      <div class="p-price">${money(p.price)}</div>
+      <div class="p-card-foot">
+        <button class="btn btn-amber btn-sm" style="flex:1;" onclick="addToCart(${p.id})">${inCart?"✓ Added":"Add to RFQ"}</button>
+        <button class="btn btn-ghost btn-sm" onclick="openPartModal(${p.id})">View</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ══ CART ══ */
+function addToCart(id){
+  const p = PARTS.find(x=>x.id===id);
+  if(!p) return;
+  if(cart.find(c=>c.id===id)){ showToast(p.name+" is already in your RFQ"); return; }
+  cart.push(p); updateCartBadge(); renderCart();
+  showToast(p.name+" added to RFQ cart");
+  renderParts();
+}
+function removeFromCart(id){ cart = cart.filter(c=>c.id!==id); updateCartBadge(); renderCart(); renderParts(); }
+function updateCartBadge(){ document.getElementById("cartBadge").textContent=cart.length; }
+function renderCart(){
+  const items = document.getElementById("cartItems");
+  if(!cart.length){ items.innerHTML='<div class="cart-empty">Your RFQ cart is empty. Browse parts and add them here.</div>'; document.getElementById("cartTotal").textContent="€0"; return; }
+  items.innerHTML = cart.map((p,i)=>`<div class="cart-line">
+    <div class="info"><b>${p.name}</b><span>${p.brand} · ${money(p.price)}</span></div>
+    <button class="remove" onclick="removeFromCart(${p.id})">&times;</button>
+  </div>`).join("");
+  document.getElementById("cartTotal").textContent = money(cart.reduce((s,p)=>s+p.price,0));
+}
+function openDrawer(){ document.getElementById("rfqDrawer").classList.add("open"); document.getElementById("drawerOverlay").classList.add("show"); renderCart(); }
+function closeDrawer(){ document.getElementById("rfqDrawer").classList.remove("open"); document.getElementById("drawerOverlay").classList.remove("show"); }
+function clearCart(){ cart=[]; updateCartBadge(); renderCart(); renderParts(); showToast("Cart cleared"); }
+
+/* ══ PART MODAL ══ */
+function openPartModal(id){
+  const p = PARTS.find(x=>x.id===id); if(!p) return;
+  document.getElementById("mIcon").textContent=p.icon;
+  document.getElementById("mTitle").textContent=p.name;
+  document.getElementById("mBrand").textContent=p.brand+" · "+p.category;
+  document.getElementById("mPrice").textContent=money(p.price);
+  document.getElementById("mSku").textContent=p.sku;
+  document.getElementById("mLead").textContent=p.lead;
+  document.getElementById("mStock").textContent=p.stock;
+  document.getElementById("mSupplier").textContent=p.brand;
+  document.getElementById("mCerts").innerHTML=p.certs.map(c=>`<span class="cert-tag">${c}</span>`).join("");
+  document.getElementById("mAddCart").onclick=()=>{ addToCart(p.id); closeModal("partModal"); };
+  showModal("partModal");
+}
+
+/* ══ PAYMENT MODAL ══ */
+function openPayModal(){
+  if(!cart.length){ showToast("Add parts to your cart first"); return; }
+  closeDrawer();
+  currentPayStep=1; showModal("payModal");
+  payGoStep(1);
+}
+function payGoStep(step){
+  currentPayStep=step;
+  [1,2,3,4].forEach(i=>{
+    document.getElementById("payPane"+i).style.display = i===step?"block":"none";
+  });
+  const steps = document.querySelectorAll("#paySteps .pay-step");
+  steps.forEach((s,i)=>{
+    s.classList.remove("active","done");
+    if(i+1<step) s.classList.add("done");
+    else if(i+1===step) s.classList.add("active");
+  });
+  if(step===2||step===3){ renderPaySummary(); }
+  if(step===3){ document.getElementById("invoiceEmail").textContent=document.getElementById("pEmail").value||"max@alphagarage.demo"; }
+}
+function renderPaySummary(){
+  const sub = cart.reduce((s,p)=>s+p.price,0);
+  const shipping = {sameday:24,h24:12,order:6}[document.getElementById("pDelivery")?.value]||12;
+  const escrow = +(sub*0.02).toFixed(2);
+  const total = sub+shipping+escrow;
+  const rows = cart.map(p=>`<div class="pay-summary-line"><span>${p.name}</span><b>${money(p.price)}</b></div>`).join("");
+  const summary = `${rows}<div class="pay-summary-line"><span>Shipping (${document.getElementById("pCarrier")?.value||"DHL"})</span><b>${money(shipping)}</b></div><div class="pay-summary-line"><span>Platform escrow fee (2%)</span><b>${money(escrow)}</b></div><div class="pay-summary-line total"><span>Total</span><b>${money(total)}</b></div>`;
+  ["paySummary","paySummary2"].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=summary; });
+}
+function setPayMethod(method, el){
+  payMethod=method;
+  document.querySelectorAll(".pay-method-tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("cardForm").style.display=method==="card"?"block":"none";
+  document.getElementById("invoiceForm").style.display=method==="invoice"?"block":"none";
+  document.getElementById("creditForm").style.display=method==="credit"?"block":"none";
+}
+function formatCard(el){ el.value=el.value.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim(); }
+function formatExpiry(el){ el.value=el.value.replace(/\D/g,"").replace(/^(\d{2})(\d)/,"$1 / $2"); }
+document.getElementById("confirmPayBtn").onclick = ()=>{
+  const orderId = genOrderId();
+  const sub = cart.reduce((s,p)=>s+p.price,0);
+  const shipping = 12;
+  const total = sub + shipping + (sub*0.02);
+  document.getElementById("orderRef").textContent = orderId;
+  const steps = [
+    {label:"Order confirmed",desc:"Your order "+orderId+" has been created",state:"done"},
+    {label:"Payment captured",desc:"Funds held in escrow — "+money(total),state:"done"},
+    {label:"Supplier notified",desc:"Supplier has 4 hours to confirm",state:"active"},
+    {label:"Dispatch",desc:"Target: within 24 hours",state:"wait"},
+    {label:"Delivery",desc:"Live tracking in your portal",state:"wait"},
+    {label:"Core return",desc:"Old part collected for remanufacturing ♻",state:"wait"},
+  ];
+  document.getElementById("trackingSteps").innerHTML = steps.map(s=>`<div class="tracking-step"><div class="t-dot ${s.state}"></div><div class="t-step-text"><b>${s.label}</b><span>${s.desc}</span></div></div>`).join("");
+  payGoStep(4);
+  cart=[]; updateCartBadge(); renderCart(); renderParts();
+  showToast("Order "+orderId+" confirmed! 🎉");
+};
+
+/* ══ MODALS ══ */
+function showModal(id){ document.getElementById(id).classList.add("show"); }
+function closeModal(id){ document.getElementById(id).classList.remove("show"); }
+function closePayModal(){ closeModal("payModal"); currentPayStep=1; }
+
+document.getElementById("closePartModal").onclick = ()=>closeModal("partModal");
+document.getElementById("closePartModal2").onclick = ()=>closeModal("partModal");
+document.getElementById("closePayModal").onclick = closePayModal;
+document.getElementById("partModal").onclick = e=>{ if(e.target.id==="partModal") closeModal("partModal"); };
+document.getElementById("payModal").onclick = e=>{ if(e.target.id==="payModal") closePayModal(); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeModal("partModal"); closePayModal(); closeDrawer(); } });
+
+/* ══ NAV EVENTS ══ */
+document.getElementById("rfqBtn").onclick = openDrawer;
+document.getElementById("closeDrawer").onclick = closeDrawer;
+document.getElementById("drawerOverlay").onclick = closeDrawer;
+document.getElementById("proceedPayBtn").onclick = openPayModal;
+document.getElementById("clearCartBtn").onclick = clearCart;
+document.getElementById("searchInput").oninput = e=>{ searchValue=e.target.value; renderParts(); };
+document.getElementById("sortSelect").onchange = e=>{ sortMode=e.target.value; renderParts(); };
+document.getElementById("verifiedOnly").onchange = e=>{ verifiedOnly=e.target.checked; renderParts(); };
+
+/* ══ SUPPLIER PORTAL ══ */
+document.querySelectorAll(".nav-item").forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+  document.querySelectorAll(".page-section").forEach(s=>s.classList.remove("active")); document.getElementById("page-"+btn.dataset.page).classList.add("active");
+});
+/* ═══ GMV bar chart data ═══ */
+const gmvMonths = [
+  {mo:"Oct",gmv:9200,orders:28},
+  {mo:"Nov",gmv:11400,orders:36},
+  {mo:"Dec",gmv:14800,orders:44},
+  {mo:"Jan",gmv:10200,orders:31},
+  {mo:"Feb",gmv:12600,orders:39},
+  {mo:"Mar",gmv:13900,orders:42},
+  {mo:"Apr",gmv:15200,orders:47},
+  {mo:"May",gmv:16800,orders:52},
+  {mo:"Jun",gmv:18420,orders:57},
+];
+const catRevenue = [
+  {label:"Filters",pct:28,color:"#3B6E91"},
+  {label:"Brakes",pct:22,color:"#B5562F"},
+  {label:"Engine",pct:18,color:"#40916C"},
+  {label:"Electrical",pct:16,color:"#6B5CA5"},
+  {label:"Other",pct:16,color:"#5B6573"},
+];
+const pipelineStages = [
+  {label:"Incoming",count:12,color:"#3B6E91",pct:100},
+  {label:"Quoted",count:8,color:"#D4A017",pct:67},
+  {label:"Accepted",count:5,color:"#40916C",pct:42},
+  {label:"Ordered",count:4,color:"#2E8B6E",pct:33},
+  {label:"Shipped",count:3,color:"#4F8A3D",pct:25},
+];
+
+function renderGmvChart(){
+  const container = document.getElementById("gmvChart");
+  if(!container) return;
+  const maxGmv = Math.max(...gmvMonths.map(m=>m.gmv));
+  const maxOrd = Math.max(...gmvMonths.map(m=>m.orders));
+  container.innerHTML = gmvMonths.map(m=>{
+    const gmvH = Math.round((m.gmv/maxGmv)*120);
+    const ordH = Math.round((m.orders/maxOrd)*120);
+    return `<div class="bar-col">
+      <div style="display:flex;gap:2px;align-items:flex-end;height:132px;">
+        <div class="bar" style="height:${gmvH}px;width:10px;background:var(--steel);flex-shrink:0;">
+          <div class="bar-tooltip">€${(m.gmv/1000).toFixed(1)}k</div>
+        </div>
+        <div class="bar amber" style="height:${ordH}px;width:8px;flex-shrink:0;">
+          <div class="bar-tooltip">${m.orders} orders</div>
+        </div>
+      </div>
+      <div class="bar-lbl">${m.mo}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderPipeline(){
+  const container = document.getElementById("rfqPipeline");
+  if(!container) return;
+  container.innerHTML = pipelineStages.map(s=>`
+    <div class="pipeline-row">
+      <div class="pipeline-label">${s.label}</div>
+      <div class="pipeline-track">
+        <div class="pipeline-fill" style="width:${s.pct}%;background:${s.color};">${s.count}</div>
+      </div>
+      <div class="pipeline-count">${s.count}</div>
+    </div>`).join("");
+}
+
+function renderDonut(){
+  const svg = document.getElementById("donutSvg");
+  const legend = document.getElementById("donutLegend");
+  if(!svg||!legend) return;
+  const r=34, cx=45, cy=45, circ=2*Math.PI*r;
+  let offset=0;
+  let circles="<circle cx='45' cy='45' r='34' fill='none' stroke='var(--surface-3)' stroke-width='14'/>";
+  catRevenue.forEach(c=>{
+    const dash = (c.pct/100)*circ;
+    const gap = circ-dash;
+    // rotate so it starts from top (-90deg = -circ/4 offset)
+    circles += `<circle cx='${cx}' cy='${cy}' r='${r}' fill='none' stroke='${c.color}' stroke-width='14'
+      stroke-dasharray='${dash.toFixed(1)} ${gap.toFixed(1)}'
+      stroke-dashoffset='${(circ/4 - offset*circ/100).toFixed(1)}'
+      style='transition:stroke-dashoffset .5s'/>`;
+    offset += c.pct;
+  });
+  svg.innerHTML = circles;
+  legend.innerHTML = catRevenue.map(c=>`<div class="donut-item"><div class="donut-dot" style="background:${c.color};"></div><span>${c.label}</span><b>${c.pct}%</b></div>`).join("");
+}
+
+function renderSupplierDash(){
+  document.getElementById("kpiRfq").textContent = supplierRfqs.filter(r=>r.status==="new").length;
+  document.getElementById("kpiOrders").textContent = supplierOrders.filter(o=>o.status==="fulfilling").length;
+  document.getElementById("kpiCatalog").textContent = supplierCatalog.filter(c=>c.active).length;
+  document.getElementById("rfqCountBadge").textContent = supplierRfqs.filter(r=>r.status==="new").length;
+  document.getElementById("orderCountBadge").textContent = supplierOrders.filter(o=>o.status==="fulfilling").length;
+
+  // Render charts
+  renderGmvChart();
+  renderPipeline();
+  renderDonut();
+
+  // Activity feed
+  const activities = [
+    ...supplierRfqs.map(r=>({icon:"📋",text:`RFQ <b>${r.id}</b> from ${r.workshop}`,status:r.status,time:"2h ago"})),
+    ...supplierOrders.map(o=>({icon:"📦",text:`Order <b>${o.id}</b> — ${money(o.value)}`,status:o.status,time:"4h ago"})),
+    {icon:"♻",text:"Core return received from <b>Alpha Garage</b> — 2 brake discs",status:"delivered",time:"6h ago"},
+    {icon:"✅",text:"Escrow released for <b>PS-240571</b> — ${money(200)}",status:"accepted",time:"8h ago"},
+  ];
+  document.getElementById("dashActivity").innerHTML = activities.map(a=>`
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft);">
+      <div style="font-size:16px;flex-shrink:0;margin-top:1px;">${a.icon}</div>
+      <div style="flex:1;font-size:13.5px;">${a.text}</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <span class="status-pill ${a.status}" style="font-size:10.5px;">${a.status}</span>
+        <span style="font-size:11px;color:var(--text-faint);">${a.time}</span>
+      </div>
+    </div>`).join("");
+
+  renderRfq(); renderOrders(); renderCatalogTable();
+}
+function renderRfq(){
+  document.getElementById("rfqTbody").innerHTML = supplierRfqs.map(r=>`<tr>
+    <td><b class="mono">${r.id}</b></td>
+    <td>${r.items.map(i=>i.name+"×"+i.qty).join(", ")}</td>
+    <td>${r.workshop}</td>
+    <td>${money(r.value)}</td>
+    <td><span class="status-pill ${r.status}">${r.status}</span></td>
+    <td>${r.status==="new"?`<button class="btn btn-amber btn-sm" onclick="acceptRfq('${r.id}')">Quote</button>`:`<button class="btn btn-ghost btn-sm">View</button>`}</td>
+  </tr>`).join("");
+}
+function acceptRfq(id){ const r=supplierRfqs.find(x=>x.id===id); if(r){ r.status="quoted"; renderRfq(); renderSupplierDash(); showToast("Quote sent for "+id); } }
+function renderOrders(){
+  document.getElementById("orderTbody").innerHTML = supplierOrders.map(o=>`<tr>
+    <td><b class="mono">${o.id}</b></td>
+    <td>${o.items.map(i=>i.name+"×"+i.qty).join(", ")}</td>
+    <td>${o.workshop}</td>
+    <td>${money(o.value)}</td>
+    <td><span class="status-pill ${o.status}">${o.status}</span></td>
+    <td>${o.status==="fulfilling"?`<button class="btn btn-amber btn-sm" onclick="shipOrder('${o.id}')">Mark shipped</button>`:o.status==="shipped"?`<button class="btn btn-ghost btn-sm" onclick="deliverOrder('${o.id}')">Delivered</button>`:`<span style="color:var(--text-faint);font-size:12px;">—</span>`}</td>
+  </tr>`).join("");
+}
+function shipOrder(id){ const o=supplierOrders.find(x=>x.id===id); if(o){ o.status="shipped"; renderOrders(); renderSupplierDash(); showToast("Order "+id+" marked as shipped"); } }
+function deliverOrder(id){ const o=supplierOrders.find(x=>x.id===id); if(o){ o.status="delivered"; renderOrders(); renderSupplierDash(); showToast("Order "+id+" delivered ✓"); } }
+function renderCatalogTable(){
+  document.getElementById("catalogTbody").innerHTML = supplierCatalog.map((p,i)=>`<tr>
+    <td><b>${p.name}</b></td>
+    <td class="mono" style="font-size:12px;">${p.sku}</td>
+    <td>${p.category}</td>
+    <td>${money(p.price)}</td>
+    <td>
+      <div class="stock-bar-wrap">
+        <div class="stock-bar"><div class="stock-bar-fill ${p.stock<5?"low":""}" style="width:${Math.min(100,p.stock/120*100)}%"></div></div>
+        <span style="font-size:12px;">${p.stock}</span>
+      </div>
+    </td>
+    <td><span class="status-pill ${p.active?"active":"inactive"}">${p.active?"Active":"Inactive"}</span></td>
+    <td><button class="btn btn-ghost btn-sm" onclick="togglePart(${i})">${p.active?"Deactivate":"Activate"}</button></td>
+  </tr>`).join("");
+}
+function togglePart(i){ supplierCatalog[i].active=!supplierCatalog[i].active; renderCatalogTable(); renderSupplierDash(); showToast((supplierCatalog[i].active?"Activated":"Deactivated")+": "+supplierCatalog[i].name); }
+function openAddPart(){ showModal("addPartModal"); }
+function closeAddPart(){ closeModal("addPartModal"); }
+function saveNewPart(){
+  const name = document.getElementById("apName").value.trim();
+  const sku = document.getElementById("apSku").value.trim();
+  if(!name||!sku){ showToast("Name and SKU are required"); return; }
+  supplierCatalog.push({ name, sku, category:document.getElementById("apCat").value, price:+document.getElementById("apPrice").value||0, stock:+document.getElementById("apStock").value||0, active:document.getElementById("apStatus").value==="Active" });
+  renderCatalogTable(); renderSupplierDash(); closeAddPart();
+  ["apName","apSku","apPrice","apStock"].forEach(id=>document.getElementById(id).value="");
+  showToast("Part added to catalog ✓");
+}
+
+/* ══ STATS ══ */
+document.getElementById("statParts").textContent = PARTS.length;
+document.getElementById("statSuppliers").textContent = new Set(PARTS.map(p=>p.brand)).size;
+
+/* ══ INIT ══ */
+buildCategoryPills();
+buildSupplierStrip();
+renderParts();
+</script>
+</body>
+</html>
